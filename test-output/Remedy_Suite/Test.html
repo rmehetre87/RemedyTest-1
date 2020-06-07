@@ -1,0 +1,212 @@
+<html>
+<head>
+<title>TestNG:  Test</title>
+<link href="../testng.css" rel="stylesheet" type="text/css" />
+<link href="../my-testng.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.log { display: none;} 
+.stack-trace { display: none;} 
+</style>
+<script type="text/javascript">
+<!--
+function flip(e) {
+  current = e.style.display;
+  if (current == 'block') {
+    e.style.display = 'none';
+    return 0;
+  }
+  else {
+    e.style.display = 'block';
+    return 1;
+  }
+}
+
+function toggleBox(szDivId, elem, msg1, msg2)
+{
+  var res = -1;  if (document.getElementById) {
+    res = flip(document.getElementById(szDivId));
+  }
+  else if (document.all) {
+    // this is the way old msie versions work
+    res = flip(document.all[szDivId]);
+  }
+  if(elem) {
+    if(res == 0) elem.innerHTML = msg1; else elem.innerHTML = msg2;
+  }
+
+}
+
+function toggleAllBoxes() {
+  if (document.getElementsByTagName) {
+    d = document.getElementsByTagName('div');
+    for (i = 0; i < d.length; i++) {
+      if (d[i].className == 'log') {
+        flip(d[i]);
+      }
+    }
+  }
+}
+
+// -->
+</script>
+
+</head>
+<body>
+<h2 align='center'>Test</h2><table border='1' align="center">
+<tr>
+<td>Tests passed/Failed/Skipped:</td><td>4/0/3</td>
+</tr><tr>
+<td>Started on:</td><td>Thu Jun 04 18:39:31 IST 2020</td>
+</tr>
+<tr><td>Total time:</td><td>214 seconds (214642 ms)</td>
+</tr><tr>
+<td>Included groups:</td><td></td>
+</tr><tr>
+<td>Excluded groups:</td><td></td>
+</tr>
+</table><p/>
+<small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-passed'>
+<tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='com.test.TC_RemedyIncident_Creation.openRemedyTest()'><b>openRemedyTest</b><br>Test class: com.test.TC_RemedyIncident_Creation</td>
+<td></td>
+<td>15</td>
+<td>com.test.TC_RemedyIncident_Creation@6a4f787b</td></tr>
+<tr>
+<td title='com.test.TC_NetCoolRemedyInc.openRemedyTest()'><b>openRemedyTest</b><br>Test class: com.test.TC_NetCoolRemedyInc</td>
+<td></td>
+<td>15</td>
+<td>com.test.TC_NetCoolRemedyInc@685cb137</td></tr>
+<tr>
+<td title='com.test.TC_NetCoolRemedyInc.test_NetcoolIncidentData()'><b>test_NetcoolIncidentData</b><br>Test class: com.test.TC_NetCoolRemedyInc<br>Parameters: [Yes, INC000000468490, TELEFONICA UK, Oss, Netcool, NC: No new files on Source - (ArcanumMob), unknown, netpulse_etl, 4-Minor/Localized, 4-Low, Low, Infrastructure Event, Netpulse SPMC, , Assigned, Availability, Data, Import/export data, Application, Software, Analytics and Management Processing, NetPulse - ETL, , Cardinality, Netcool, 7229:netpulse_etl:Availability:arcanumMobNoNewFilesInSource, 20/03/2020 11:06:15, 1587721, , 7229, NetPulse-ETL, arcanumMobNoNewFilesInSource, 3], org.testng.TestRunner@56ccd751</td>
+<td></td>
+<td>44</td>
+<td>com.test.TC_NetCoolRemedyInc@685cb137</td></tr>
+<tr>
+<td title='com.test.TC_RemedyIncident_Creation.test_createInc()'><b>test_createInc</b><br>Test class: com.test.TC_RemedyIncident_Creation<br>Parameters: [Yes, TELEFONICA UK, birajds1, test, dummy testing, 3-Moderate/Limited, 3-Medium, User Service Restoration, TELEFONICA UK, Networks - Network Operations - G-NOC RAN, Field Services, smart metering, cnbas-esxvm-345.uk.pri.o2.com, Field Services Auto-Resolver, RAN, Build, , Business Service, Customer Facing, , , , INC000000509251]</td>
+<td></td>
+<td>99</td>
+<td>com.test.TC_RemedyIncident_Creation@6a4f787b</td></tr>
+</table><p>
+<table width='100%' border='1' class='invocation-skipped'>
+<tr><td colspan='4' align='center'><b>SKIPPED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='com.test.TC_NetCoolRemedyInc.test_NetcoolIncidentData()'><b>test_NetcoolIncidentData</b><br>Test class: com.test.TC_NetCoolRemedyInc<br>Parameters: [No, INC000000468499, TELEFONICA UK, Oss, Netcool, NC: No new files on Source - (ArcanumMob), unknown, netpulse_etl, 4-Minor/Localized, 4-Low, Low, Infrastructure Event, Netpulse SPMC, , Assigned, Availability, Data, Import/export data, Application, Software, Analytics and Management Processing, NetPulse - ETL, , Cardinality, Netcool, 7229:netpulse_etl:Availability:arcanumMobNoNewFilesInSource, 20/03/2020 11:06:15, 1587721, , 7229, NetPulse-ETL, arcanumMobNoNewFilesInSource, 3], org.testng.TestRunner@56ccd751</td>
+<td><div><pre>org.testng.SkipException: Testcase Skipped!!
+	at com.test.TC_NetCoolRemedyInc.test_NetcoolIncidentData(TC_NetCoolRemedyInc.java:122)
+... Removed 25 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace542019831", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace542019831'><pre>org.testng.SkipException: Testcase Skipped!!
+	at com.test.TC_NetCoolRemedyInc.test_NetcoolIncidentData(TC_NetCoolRemedyInc.java:122)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:583)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:450)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:415)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:364)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
+	at org.testng.TestNG.runSuites(TestNG.java:1049)
+	at org.testng.TestNG.run(TestNG.java:1017)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:114)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+</pre></div></td>
+<td>0</td>
+<td>com.test.TC_NetCoolRemedyInc@685cb137</td></tr>
+<tr>
+<td title='com.test.TC_RemedyIncident_Creation.test_createInc()'><b>test_createInc</b><br>Test class: com.test.TC_RemedyIncident_Creation<br>Parameters: [No, TELEFONICA UK, GNOC, test, dummy testing, 4-Minor/Localized, 4-Low, User Service Restoration, TELEFONICA UK, Networks - Infrastructure - IT Infrastructure, Unix Support, gnoc default service, gnoc default service, , Modify, Report, , Business Service, Customer Facing, Network Services, , Phone, INC000000507627]</td>
+<td><div><pre>org.testng.SkipException: Testcase Skipped!!
+	at com.test.TC_RemedyIncident_Creation.test_createInc(TC_RemedyIncident_Creation.java:122)
+... Removed 25 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1441410416", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1441410416'><pre>org.testng.SkipException: Testcase Skipped!!
+	at com.test.TC_RemedyIncident_Creation.test_createInc(TC_RemedyIncident_Creation.java:122)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:583)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:450)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:415)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:364)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
+	at org.testng.TestNG.runSuites(TestNG.java:1049)
+	at org.testng.TestNG.run(TestNG.java:1017)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:114)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+</pre></div></td>
+<td>0</td>
+<td>com.test.TC_RemedyIncident_Creation@6a4f787b</td></tr>
+<tr>
+<td title='com.test.TC_RemedyIncident_Creation.test_createInc()'><b>test_createInc</b><br>Test class: com.test.TC_RemedyIncident_Creation<br>Parameters: [No, TELEFONICA UK, birajds1, SMIP TC1, dummy Automation test Incident SMIP TC1, 2-Significant/Large, 2-High, User Service Restoration, TELEFONICA UK, Networks - Network Operations - G-NOC RAN, Field Services, smart metering, smart homes, , Application, Process Failure, Alarm, Business Service, Customer Facing, Smart Meter Service, , Smart Metering, INC000000507462]</td>
+<td><div><pre>org.testng.SkipException: Testcase Skipped!!
+	at com.test.TC_RemedyIncident_Creation.test_createInc(TC_RemedyIncident_Creation.java:122)
+... Removed 25 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace99042020", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace99042020'><pre>org.testng.SkipException: Testcase Skipped!!
+	at com.test.TC_RemedyIncident_Creation.test_createInc(TC_RemedyIncident_Creation.java:122)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:583)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:450)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:415)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:364)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
+	at org.testng.TestNG.runSuites(TestNG.java:1049)
+	at org.testng.TestNG.run(TestNG.java:1017)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:114)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+</pre></div></td>
+<td>0</td>
+<td>com.test.TC_RemedyIncident_Creation@6a4f787b</td></tr>
+</table><p>
+</body>
+</html>

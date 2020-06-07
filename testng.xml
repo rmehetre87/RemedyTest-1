@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Remedy_Suite" parallel="none">
+  
+  <listeners>
+      
+      <listener class-name="com.listeners.ExtentITestListenerClassAdapter"/>
+      
+  </listeners>
+  
+  <test name="Test">
+    <classes>
+    
+        
+        <class name="com.test.TC_RemedyIncident_Creation"/> 
+     	  <class name="com.test.TC_NetCoolRemedyInc"/> 
+      
+       <!--  
+       <class name="com.test.TC_RemedyIncident_Creation"/> 
+       <class name="com.test.TC_RemedyIncident_Search"/>
+       <class name="com.test.TC_NetCoolRemedyInc"/> 
+      	<class name="com.test.TC_RemedyWorkOrder"/> 
+      	 -->
+      	
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
