@@ -26,7 +26,8 @@ import com.java.Inc_Utility;
 import com.java.MethodLibrary;
 import com.listeners.ExtentITestListenerClassAdapter;
 
-@Listeners({com.listeners.RetryListener.class,ExtentITestListenerClassAdapter.class})
+//@Listeners({com.listeners.RetryListener.class,ExtentITestListenerClassAdapter.class})
+
 public class TC_RemedyIncident_Update extends MethodLibrary{
 	
 	static WebDriver driver;
@@ -57,9 +58,8 @@ public class TC_RemedyIncident_Update extends MethodLibrary{
 			e.printStackTrace();
 		}
 	}
-		
   
-    @AfterTest(enabled = false)
+    @AfterTest(enabled = true)
     public void teardown() {
     	try {
 			Thread.sleep(5000);
@@ -71,15 +71,12 @@ public class TC_RemedyIncident_Update extends MethodLibrary{
     	
     }
     
-    
     @Test(priority = 1,retryAnalyzer= com.listeners.Retry.class,enabled = true)
 	public void openRemedyTest() throws FileNotFoundException, IOException{
 		
 		openRemedy(driver,"username1","pwd1");
 	}
-    
-    
-        
+   
 	
     @DataProvider(name="dp_UpdateInc")
     public Object[] dp_UpdateInc() throws Exception{
@@ -107,18 +104,23 @@ public class TC_RemedyIncident_Update extends MethodLibrary{
     }
 
     
-    
-    
-    @Test(dataProvider="dp_UpdateInc",retryAnalyzer= com.listeners.Retry.class, enabled = false,priority = 4)	
+    @Test(dataProvider="dp_UpdateInc",retryAnalyzer= com.listeners.Retry.class, enabled = true, priority = 4)	
 	public void test_updateInc(ArrayList<String> rowdata,ITestContext context) throws Exception {
 			
     		logger = ExtentITestListenerClassAdapter.getLogger();
     		String incId = rowdata.get(0);
+    		
 			System.out.println("Id is: "+incId);
+			
 			Thread.sleep(5000); 
+			
 			Inc_Utility.searchIncident(driver, incId,logger);
+			
 			Thread.sleep(5000);
+			
 			Inc_Utility.updateIncident(driver,logger,rowdata);
 			
 		}
+
+
 }

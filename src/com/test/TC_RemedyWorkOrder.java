@@ -37,7 +37,7 @@ public class TC_RemedyWorkOrder extends MethodLibrary {
 	
     
 	
-    @Test(dependsOnMethods = "openRemedyTest",retryAnalyzer= com.listeners.Retry.class, enabled = true,priority = 2)
+    @Test(dependsOnMethods = "openRemedyTest",retryAnalyzer= com.listeners.Retry.class, enabled = true, priority = 2)
     public void test_createWorkOrder(ITestContext context) {
 	 
     	try{
@@ -65,7 +65,7 @@ public class TC_RemedyWorkOrder extends MethodLibrary {
 		}
     }
 
-	@Test(dependsOnMethods = "openRemedyTest",retryAnalyzer= com.listeners.Retry.class, enabled = true, priority = 2)
+	@Test(dependsOnMethods = "openRemedyTest",retryAnalyzer= com.listeners.Retry.class, enabled = false, priority = 2)
 	public void test_searchWorkOrder(ITestContext context) throws Exception {
 				
 			ExcelUtility.setExcelFile(Path_TestData + File_TestData, "WO_search");
@@ -107,11 +107,12 @@ public class TC_RemedyWorkOrder extends MethodLibrary {
 		openRemedy(driver,"username1","pwd1");
 	}
 		
-   @AfterTest
+   @AfterTest(enabled=false)
    public void teardown() {
    	try {
 			Thread.sleep(5000);
 			MethodLibrary.logout(driver);
+			driver.quit();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

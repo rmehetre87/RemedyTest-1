@@ -3,16 +3,12 @@ package com.java;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-
-
-
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
-
 import com.aventstack.extentreports.ExtentTest;
-
-
+import com.java.ExtentReportUtility;
+import com.listeners.ExtentITestListenerClassAdapter;
 
 public class WO_utility {
 
@@ -97,17 +93,13 @@ public class WO_utility {
 				}
 		logger.info("WorkOrder created :" +workOrder_num);
 		return workOrder_num;
-		
-		
-		
+			
 	}
 
 	
 	public static void search_WO(WebDriver driver,String woId, ExtentTest logger) throws FileNotFoundException, IOException, InterruptedException {
 		
-		
-		
-		
+				
 		MethodLibrary.click(driver,"Applications_btn");
 		logger.info("Application started..");
 		MethodLibrary.click(driver,"Service_Request_Management_btn");
@@ -119,7 +111,12 @@ public class WO_utility {
 		Thread.sleep(2000);
 		MethodLibrary.sendKeys(driver,"wo_id_xpath", woId);
 		MethodLibrary.getElement(driver,"wo_id_xpath").sendKeys(Keys.ENTER);
+		
 		logger.info("work order number entered..");
+		
+		logger.info("searched work order is: " + woId);
+		
+		
 	}
 	
 	

@@ -79,35 +79,28 @@ public class Inc_Utility {
 	}
 
 	public static void searchIncident(WebDriver driver, String incId,ExtentTest logger) {
-        SoftAssert softassert = new SoftAssert();  
+        
 		
 		try {
 			properties = new Properties();
 			properties.load(new FileReader(".//Data//ObjectReository.properties"));
-			// WebDriverWait wait = new WebDriverWait(driver, 30);
 			handleAlertPresent(driver);
 
-			WebElement application_tab = driver.findElement(By.id("reg_img_304316340"));
-			application_tab.click();
-			WebElement incidentmgmt = driver.findElement(By.xpath("//a/span[text()='Incident Management']"));
-			Actions action = new Actions(driver);
-			action.moveToElement(incidentmgmt).click().perform();
-			WebElement searchIncident = driver.findElement(By.xpath("//*[@id='FormContainer']/div[5]/div/div[8]/div/div[3]/a/span"));
-			searchIncident.click();
-            logger.info("On search Page..");
-			WebElement incident_id = driver.findElement(By.id(properties.getProperty("incident_id")));
-			incident_id.sendKeys(incId);
-			incident_id.sendKeys(Keys.ENTER);
-			softassert.assertEquals("true", "true","Inc details getting searched..");
+			MethodLibrary.click(driver, "Applications_btn");
+			MethodLibrary.clicknHold(driver, "IncidentMgmt_btn");
+			MethodLibrary.click(driver, "sraechInc_btn");
+			Thread.sleep(3000);
+			MethodLibrary.sendKeys(driver,"incident_id", incId);
+			MethodLibrary.sendEnterKey(driver,"incident_id", Keys.ENTER);
+			Thread.sleep(2000);
+			
 			logger.info("Incident " + incId + " details getting searched!!");
-		    softassert.assertAll();
 			Thread.sleep(5000);
 			
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			// driver.close();
-			Assert.fail();
+			
 
 		}
 
@@ -168,7 +161,69 @@ public class Inc_Utility {
 		
 	}
 	
-	
+
+	public static void addRelationshipCI(WebDriver driver,ExtentTest logger, ArrayList<String> values) throws FileNotFoundException, IOException, InterruptedException{
+		
+		logger.info("On search incident details Page!!");
+		WebDriverWait wait = new WebDriverWait(driver, 25);
+		String windowhandle = driver.getWindowHandle();
+		System.out.println("window handle: "+windowhandle);
+		WebElement frame1 =  MethodLibrary.getElement(driver, "iFrameMsg_xpath");
+		driver.switchTo().frame(frame1);
+		
+		MethodLibrary.click(driver, "iFrameMsg_ok");
+		Thread.sleep(8000);
+		MethodLibrary.click(driver, "Relationship_tab");
+		logger.info("Adding CIs to Incident!!");
+		MethodLibrary.click(driver, "relation_menu");
+		MethodLibrary.click(driver, "relation_sel");
+		
+			for(int i=2;i<=4;i++){
+				if(values.get(i).length()>1){	
+						//MethodLibrary.click(driver, "relation_menu");
+						//MethodLibrary.click(driver, "relation_sel");
+						MethodLibrary.click(driver, "relation_search");
+						
+						Thread.sleep(1000);
+						
+						Set<String> handles = driver.getWindowHandles();
+				
+						for (String handle : handles) {
+							if (handle != windowhandle) {
+								driver.switchTo().window(handle);
+							}
+						}
+						
+						MethodLibrary.sendKeys(driver,"CI_searchbox", values.get(i));
+						MethodLibrary.click(driver,"CI_searchBtn");
+						Thread.sleep(2000);
+						MethodLibrary.click(driver,"CI_value");
+						MethodLibrary.click(driver, "CI_relateBtn");
+						Thread.sleep(2000);
+						WebElement frame2 =  MethodLibrary.getElement(driver, "CI_frame");
+						System.out.println("Frame:" +frame2);
+					   	driver.switchTo().frame(frame2);
+					    MethodLibrary.click(driver, "iFrameMsg_ok");
+					   if(MethodLibrary.getElement(driver, "iFrameMsg_xpath").isDisplayed()){
+						   frame2 =  MethodLibrary.getElement(driver, "CI_frame");
+						   System.out.println("Frame:" +frame2);
+						   driver.switchTo().frame(frame2);
+						   MethodLibrary.click(driver, "iFrameMsg_ok");
+						   
+					   }
+					   
+					    Thread.sleep(3000);
+					    System.out.println("handles "+handles);
+					    System.out.println("window handle "+windowhandle);
+					    driver.switchTo().window(windowhandle);
+					    
+					}
+				
+			}	
+			
+			MethodLibrary.click(driver, "save_btn"); 				//Saving Incident 
+			logger.info("CIs added and saved to the Incident!!");
+	}
 	
 	/**
 	 * updateIncident Updates Status, Priority, Assignee, CI value of an Incident.
@@ -233,8 +288,7 @@ public class Inc_Utility {
 						MethodLibrary.click(driver,"Assignee_sel");
 						Thread.sleep(1000);
 						MethodLibrary.clickByValue(driver,assignee);
-		
-		
+				
 						System.out.println("Value is: "+MethodLibrary.getElementvalue(driver, "Assignee", "title"));
 						action.moveToElement(status).perform();
 						status.click();
@@ -452,6 +506,122 @@ public class Inc_Utility {
 		
 			}
 
+	
+	public static void addVendorTask(WebDriver driver,ExtentTest logger, ArrayList<String> data) throws FileNotFoundException, IOException, InterruptedException{
+		
+		properties.load(new FileReader(".//Data//ObjectReository.properties"));
+		String windowhandle = driver.getWindowHandle();
+		WebDriverWait wait = new WebDriverWait(driver, 25);
+		/*logger.info("On search incident details Page!!");
+		
+		WebElement frame1 =  MethodLibrary.getElement(driver, "iFrameMsg_xpath");
+		driver.switchTo().frame(frame1);
+		
+		MethodLibrary.click(driver, "iFrameMsg_ok");*/
+		//driver.switchTo().defaultContent();
+		Thread.sleep(5000);
+		logger.info("Adding Vendor Task for "+data.get(1)+" Incident!!");
+		
+		
+		if(data.get(5).equalsIgnoreCase("BEACON")){
+			
+			wait.until(ExpectedConditions.elementToBeClickable(By.xpath(properties.getProperty("Vendortab_xpath"))));
+			MethodLibrary.onclick(driver, "Vendortab_xpath");
+			
+			MethodLibrary.click(driver, "sel_initiative_xpath");
+			MethodLibrary.getElementbyvlaue(driver,data.get(5)).click(); //select initiative
+			logger.info("Initiative "+data.get(5)+" Selected!!");
+			
+			MethodLibrary.click(driver, "sel_vandorComp_xpath");
+			MethodLibrary.getElementbyvlaue(driver, data.get(6)).click(); //select vandor company
+			logger.info("Vandor_company "+data.get(6)+" Selected!!");
+			
+			MethodLibrary.click(driver, "sel_managingOp_xpath");
+			MethodLibrary.getElementbyvlaue(driver, data.get(7)).click(); //select managing operator
+			logger.info("Managing operator "+data.get(7)+" Selected!!");
+			
+			MethodLibrary.click(driver, "createbtn");
+			logger.info("Creating Task!!");
+			
+			Set<String> handles = driver.getWindowHandles();
+			System.out.println("num of handle: "+handles.size());
+			for (String handle : handles) {
+				if (handle != windowhandle) {
+					driver.switchTo().window(handle);
+				}
+			}
+			   Thread.sleep(2000);
+			WebElement frame2 =  MethodLibrary.getElement(driver, "createVandor_iframeXpath");
+		    driver.switchTo().frame(frame2);
+		    MethodLibrary.click(driver, "createVandor_ok");
+		    		       
+		    Thread.sleep(1000);
+		   // MethodLibrary.sendKeys(driver, "summary_text", "Sample Vendor task Summary.");
+		   // MethodLibrary.sendKeys(driver, "notes_text", "Sample Vendore task notes.");
+		    MethodLibrary.click(driver, "close_btn");// closing Vandor task
+		    
+		   driver.switchTo().window(windowhandle);
+		    
+		}
+		else if(data.get(5).equalsIgnoreCase("Field Services")){
+			
+			wait.until(ExpectedConditions.elementToBeClickable(By.xpath(properties.getProperty("Vendortab_xpath"))));
+			MethodLibrary.onclick(driver, "Vendortab_xpath");
+			
+			MethodLibrary.click(driver, "sel_initiative_xpath");
+			MethodLibrary.getElementbyvlaue(driver,data.get(5)).click(); //select initiative
+			logger.info("Initiative "+data.get(5)+" Selected!!");
+			
+			MethodLibrary.click(driver, "sel_vandorComp_xpath");
+			MethodLibrary.getElementbyvlaue(driver, data.get(6)).click(); //select vandor company //ERICSSON
+			logger.info("Vandor_company "+data.get(6)+" Selected!!");
+			
+			MethodLibrary.click(driver, "sel_managingOp_xpath");
+			MethodLibrary.getElementbyvlaue(driver, data.get(7)).click(); //select managing operator
+			logger.info("Managing operator "+data.get(7)+" Selected!!");
+			
+			MethodLibrary.click(driver, "createbtn");
+			logger.info("Creating Task!!");
+			
+			Set<String> handles = driver.getWindowHandles();
+			System.out.println("num of handle: "+handles.size());
+			for (String handle : handles) {
+				if (handle != windowhandle) {
+					driver.switchTo().window(handle);
+				}
+			}
+			   Thread.sleep(2000);
+
+			   WebElement frame2 =  MethodLibrary.getElement(driver, "ericsson_iframeXpath");
+			   driver.switchTo().frame(frame2);
+			   MethodLibrary.click(driver, "ericsson_PhysicalCI");
+			   MethodLibrary.click(driver, "ericsson_addCI");
+			   Thread.sleep(1000);
+			   MethodLibrary.click(driver, "ericsson_CI");			    
+			   MethodLibrary.click(driver, "ericsson_addCI");
+			   MethodLibrary.click(driver, "ericsson_addBtn");		       
+			    
+			   Thread.sleep(1000);
+
+			   MethodLibrary.click(driver, "ericsson_catTab");
+			   MethodLibrary.onclick(driver, "ericsson_tier1");
+			   MethodLibrary.click(driver, "ericsson_tier1_value");
+			   MethodLibrary.onclick(driver, "ericsson_tier2");
+			   MethodLibrary.click(driver, "ericsson_tier2_value");
+			   
+			   MethodLibrary.sendKeys(driver, "summary_text", "Sample Vendor task Summary.");
+			   MethodLibrary.sendKeys(driver, "notes_text", "Sample Vendore task notes.");
+			
+			   MethodLibrary.click(driver, "close_btn");
+			// MethodLibrary.click(driver, "sendToVandeor_btn");
+			   
+		}
+	    	Thread.sleep(4000);
+		WebElement searchNewInc = driver.findElement(By.xpath(properties.getProperty("searchNewInc_xpath")));
+		searchNewInc.click();
+	}
+	
+	
 	/**
 	 * modify_InC modifies Incident resolution details.
 	 * 
@@ -526,8 +696,7 @@ public class Inc_Utility {
 						WebElement searchIncident = driver.findElement(By.xpath("//*[@id='FormContainer']/div[5]/div/div[8]/div/div[3]/a/span"));
 						searchIncident.click();
 			
-						//WebElement incident_id = driver.findElement(By.id(properties.getProperty("incident_id")));
-						//incident_id.sendKeys(incID);
+						
 						MethodLibrary.sendKeys(driver,"incident_id", incID);
 						MethodLibrary.sendEnterKey(driver,"incident_id", Keys.ENTER);
 						//incident_id.sendKeys(Keys.ENTER);
@@ -644,6 +813,7 @@ public class Inc_Utility {
 						incDetails.add(contactMethod_txt);
 			
 						logger.info("Search Completed.");
+						
 						System.out.println("Company name " + company_text
 								+ " Customer Name: " + customer_text + " Service: "
 								+ servicetxt + "\n impact is " + impacttxt + " Urgency is "
@@ -882,17 +1052,20 @@ public class Inc_Utility {
 			Thread.sleep(5000);
 			MethodLibrary.sendKeys(driver, "incident_id", incID);
 			MethodLibrary.sendEnterKey(driver,"incident_id", Keys.ENTER);
+			
 			logger.info("Verifying details for Incident: " + incID);
 
 			// =====Get Incident details====//
 
-			Thread.sleep(10000);
+			Thread.sleep(12000);
 			handleAlertPresent(driver);
 			Thread.sleep(2000);
-			int i = 2; 
+			
+			int i = 2;
+			
 			if(i<incData.size())
 			{
-				String company_actualvalue = MethodLibrary.verifyValue(driver,softassert, "company_xpath", "title", incData.get(i));
+				String company_actualvalue = MethodLibrary.verifyValue(driver, softassert, "company_xpath", "title", incData.get(i));
 				logger.info("Validatation point : Company field actual value: '"+company_actualvalue+"' matches with expected value: "+incData.get(i));
 				i++;
 				

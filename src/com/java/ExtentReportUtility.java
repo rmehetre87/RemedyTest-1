@@ -39,7 +39,7 @@ public class ExtentReportUtility {
 		    extent.attachReporter(htmlReporter);
 		    
 		    extent.setSystemInfo("Browser", "Chrome 83.0");
-		    extent.setSystemInfo("Automation Tester", "Sourabh Jain");
+		    extent.setSystemInfo("Automation Tester", "Rahul Mehetre");
 		    extent.setSystemInfo("Organization", "TUK-TechM");
 		    
 	 		}

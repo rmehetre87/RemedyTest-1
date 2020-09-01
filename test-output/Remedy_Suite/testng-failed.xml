@@ -1,25 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite guice-stage="DEVELOPMENT" name="Failed suite [Remedy_Suite]">
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite thread-count="1" guice-stage="DEVELOPMENT" name="Failed suite [Remedy_Suite]" parallel="classes">
   <listeners>
     <listener class-name="com.listeners.ExtentITestListenerClassAdapter"/>
   </listeners>
-  <test thread-count="5" name="Test(failed)">
+  <test thread-count="1" name="Test(failed)" parallel="classes">
     <classes>
-      <class name="com.test.TC_NetCoolRemedyInc">
+      <class name="com.test.TC_AlarmKeyDB_Searchvalidations">
         <methods>
-          <include name="test_NetcoolIncidentData" invocation-numbers="1"/>
-          <include name="beforeTest"/>
+          <include name="openCMDB"/>
           <include name="teardown"/>
-        </methods>
-      </class> <!-- com.test.TC_NetCoolRemedyInc -->
-      <class name="com.test.TC_RemedyIncident_Creation">
-        <methods>
-          <include name="teardown"/>
-          <include name="test_createInc" invocation-numbers="1 2"/>
           <include name="beforeTest"/>
         </methods>
-      </class> <!-- com.test.TC_RemedyIncident_Creation -->
+      </class> <!-- com.test.TC_AlarmKeyDB_Searchvalidations -->
     </classes>
   </test> <!-- Test(failed) -->
 </suite> <!-- Failed suite [Remedy_Suite] -->

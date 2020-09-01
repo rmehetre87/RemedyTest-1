@@ -15,6 +15,7 @@ import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.Markup;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
+import com.aventstack.extentreports.model.Log;
 import com.java.ExtentReportUtility;
 import com.java.Inc_Utility;
 import com.java.MethodLibrary;
@@ -37,7 +38,7 @@ public class ExtentITestListenerClassAdapter implements ITestListener{
 		// TODO Auto-generated method stub
 		try {
 			//logger.info("***************Test execution Ended!!***************");
-			System.out.println("Test Execution Ended!!");
+			System.out.println("!!**************Test Execution Ended*************!!");
 			ExtentReportUtility.tearDown();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -46,7 +47,8 @@ public class ExtentITestListenerClassAdapter implements ITestListener{
 	}
 
 	public void onStart(ITestContext context) {
-		System.out.println("Test Execution Started!!");
+		
+		System.out.println("!!********* Test Execution Started ***********!!");
 		
 		}	
 	
@@ -59,8 +61,8 @@ public class ExtentITestListenerClassAdapter implements ITestListener{
 
 	@Override
 	public void onTestFailure(ITestResult result) {
-		// TODO Auto-generated method stub
-				driver = (WebDriver)result.getTestContext().getAttribute("webDriver");	
+
+		driver = (WebDriver)result.getTestContext().getAttribute("webDriver");
 				
 				String exceptionMsg = result.getThrowable().getMessage();
 				
@@ -71,7 +73,7 @@ public class ExtentITestListenerClassAdapter implements ITestListener{
 						);
 				
 				
-				String temp=MethodLibrary.getScreenshot(driver);
+				String temp = MethodLibrary.getScreenshot(driver);
 				try {
 					logger.fail("<b>"+"<font color="+"red>"+"Screenshot of failure"+"</font>"+"</b>", MediaEntityBuilder.createScreenCaptureFromPath(temp).build());
 				} catch (IOException e) {
@@ -99,15 +101,14 @@ public class ExtentITestListenerClassAdapter implements ITestListener{
 		// TODO
 		extent = (ExtentReports) result.getTestContext().getAttribute("extent");	
 		logger = extent.createTest(result.getName());
-				logger.info(result.getName()+" test execution started..!!");
-				System.out.println(result.getName()+" execution started..!!");
+				logger.info(result.getName()+" Test execution started..!!");
+				System.out.println(result.getName()+" Execution started..!!");
 				
 	}
 
 	@Override
 	public void onTestSuccess(ITestResult result) {
-		// TODO Auto-generated method stub
-		
+				
 		String testNamme  = result.getName();
 		String logText = "<b>"+"TEST CASE:- "+testNamme.toUpperCase()+" PASSED."+"</b>";
 		Markup m = MarkupHelper.createLabel(logText, ExtentColor.GREEN);

@@ -13,13 +13,10 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
-
-
-
-
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.By.ById;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
@@ -29,25 +26,33 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.asserts.Assertion;
 import org.testng.asserts.SoftAssert;
 
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.model.Log;
+
+import freemarker.log.Logger;
 import sun.util.logging.resources.logging;
 
-
-
-public class MethodLibrary  {
+	public class MethodLibrary  {
 
 	static WebDriver driver;
 	private static Properties properties =  new Properties();
 	static Actions action;
+	static ExtentTest logger;
 	public static JavascriptExecutor js = (JavascriptExecutor) driver; 
 
 
@@ -58,8 +63,11 @@ public class MethodLibrary  {
 		switch (browsername) {
 		case "Chrome":
 			System.setProperty("webdriver.chrome.silentOutput", "true");
-			System.setProperty("webdriver.chrome.driver","C:\\Users\\home\\Desktop\\work\\software\\selenium_jars\\chromedriver.exe");
-			driver = new ChromeDriver();
+			
+			DesiredCapabilities cap=DesiredCapabilities.chrome();
+			cap.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+			System.setProperty("webdriver.chrome.driver","C:\\OSS\\chromedriver_win32\\chromedriver.exe");
+			driver = new ChromeDriver(cap);
 			break;
 
 		case "IE":
@@ -68,7 +76,7 @@ public class MethodLibrary  {
 			break;
 
 		default:
-			System.setProperty("webdriver.chrome.driver","C:\\Users\\home\\Desktop\\work\\software\\selenium_jars\\chromedriver.exe");
+			System.setProperty("webdriver.chrome.driver","C:\\OSS\\chromedriver_win32\\chromedriver.exe");
 			driver = new ChromeDriver();
 			break;
 		}
@@ -80,21 +88,63 @@ public class MethodLibrary  {
 
 
 	}
-
-	
-	
-	public static String verifyValue(WebDriver driver,SoftAssert softassert,String identifier,String attribute,String expectedValue) throws FileNotFoundException, IOException{
+     public static String verifyValue(WebDriver driver, SoftAssert softassert, String identifier, String attribute, String expectedValue) throws FileNotFoundException, IOException{
 		
-		
-		String actualValue = getElementvalue(driver,identifier,attribute);
+		String actualValue = getElementvalue(driver, identifier, attribute);
 		expectedValue = expectedValue.trim();
 		actualValue = actualValue.trim();
-		/*System.out.println("actual: "+actualValue);
-		System.out.println("expected: "+expectedValue);*/
-		softassert.assertEquals(actualValue,expectedValue);
+		
+		softassert.assertEquals(actualValue, expectedValue);
+		
+		if(actualValue.equals(expectedValue))
+		{
+			System.out.println("test expected==="+actualValue);
+		}
+		else
+		{
+			System.out.println("test expected111==="+actualValue);
+			logger.fail("Field Actual Value: "+actualValue +"is not Mached with Expected Value: "+expectedValue);
+			String temp = MethodLibrary.getScreenshot(driver);
+			logger.fail("<b>"+"<font color="+"red>"+"Screenshot of failure"+"</font>"+"</b>", MediaEntityBuilder.createScreenCaptureFromPath(temp).build());
+		
+		}
 		
 		return actualValue;
+	}
+	
+	public static String verifyFieldValue(ExtentTest logger, WebDriver driver, SoftAssert softassert, String identifier, String attribute, String expectedValue) throws FileNotFoundException, IOException{
 		
+		String actualValue = getElementvalue(driver, identifier, attribute);
+		expectedValue = expectedValue.trim();
+		actualValue = actualValue.trim();
+		//int fail = 0;
+		
+		softassert.assertEquals(actualValue, expectedValue);
+		
+		if(actualValue.equals(expectedValue))
+		{			
+			logger.info("Validatation point : "+identifier+ " actual value: '"+actualValue+"' matches with expected value: "+expectedValue);
+		}
+		else
+		{
+			logger.fail(" Actual Value: "+actualValue +", is not Mached with Expected Value: "+expectedValue);
+			String temp = MethodLibrary.getScreenshot(driver);
+			logger.fail("<font color="+"red>"+"Screenshot: "+"</font>", MediaEntityBuilder.createScreenCaptureFromPath(temp).build());
+					
+		}
+		
+		return actualValue;
+	}
+	
+	public static String nc_verifyValue(WebDriver driver,int colnum,SoftAssert softassert,String expectedValue) throws FileNotFoundException, IOException{
+		
+		//colnum = colnum - 1;
+		
+		String actualValue = nc_GetTableElement(driver, 1, colnum);
+		expectedValue = expectedValue.trim();
+		actualValue = actualValue.trim();
+		softassert.assertEquals(actualValue,expectedValue);
+		return actualValue;
 		
 	}
 
@@ -103,7 +153,7 @@ public class MethodLibrary  {
 		properties.load(new FileReader(".//Data//ObjectReository.properties"));
 		driver.get(properties.getProperty("test_URL"));
 		driver.findElement(By.id("username-id")).sendKeys(properties.getProperty(username)); //birajds1 jains9
-		driver.findElement(By.id("pwd-id")).sendKeys(properties.getProperty(password)); //testing123 Welcome@123
+		driver.findElement(By.id("pwd-id")).sendKeys("Life@2020"); //testing123 Welcome@123
 		driver.findElement(By.name("login")).click();
 
 	}
@@ -132,13 +182,58 @@ public class MethodLibrary  {
 
 	}
 
-
+	public static void openNetcool(WebDriver driver,String username,String password) throws FileNotFoundException, IOException{
+		
+		properties.load(new FileReader(".//Data//ObjectReository.properties"));
+		driver.get(properties.getProperty("dev_NetcoolURL"));
+		driver.findElement(By.xpath(properties.getProperty("nc_userid_xpath"))).sendKeys(properties.getProperty(username)); //birajds1 jains9
+		driver.findElement(By.xpath(properties.getProperty("nc_pwd_xpath"))).sendKeys(properties.getProperty(password)); //testing123 Welcome@123
+		driver.findElement(By.xpath(properties.getProperty("nc_loginBtn_xpath"))).click();
+		
+	}
+	
+	public static void openCMDB(WebDriver driver, String username, String password) throws FileNotFoundException, IOException{
+	
+	properties.load(new FileReader(".//Data//ObjectReository.properties"));
+	driver.get(properties.getProperty("CMBDTest_URL"));
+		
+	 driver.findElement(By.id("details-button")).click();
+	 driver.findElement(By.id("proceed-link")).click();
+	 
+	/*DesiredCapabilities caps = DesiredCapabilities.chrome();
+	caps.setCapability(ChromeOptions.CAPABILITY, options);
+	caps.setCapability("acceptInsecureCerts", true);*/
+		
+	driver.findElement(By.xpath(properties.getProperty("cmdb_userid_xpath"))).sendKeys(properties.getProperty(username)); //birajds1 jains9
+	driver.findElement(By.xpath(properties.getProperty("cmdb_pwd_xpath"))).sendKeys(properties.getProperty(password)); //testing123 Welcome@123
+	driver.findElement(By.xpath(properties.getProperty("cmdb_loginBtn_xpath"))).click();
+	
+}
 
 	public static void logout(WebDriver driver) {
 		properties = new Properties();	
 		try {
 			properties.load(new FileReader(".//Data//ObjectReository.properties"));
+			
 			driver.findElement(By.xpath(properties.getProperty("Logout_xpath"))).click();
+			driver.quit();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+	}
+	
+	public static void cmdblogout(WebDriver driver) {
+		properties = new Properties();	
+		try {
+			properties.load(new FileReader(".//Data//ObjectReository.properties"));
+			
+			driver.findElement(By.xpath(properties.getProperty("cmdb_logout"))).click();
 			driver.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -157,7 +252,7 @@ public class MethodLibrary  {
 	{
 		TakesScreenshot ts= (TakesScreenshot) driver;
 
-		File src = ts.getScreenshotAs(OutputType.FILE);
+			File src = ts.getScreenshotAs(OutputType.FILE);
 
 		String path = System.getProperty("user.dir")+"/Screenshots/"+System.currentTimeMillis()+".png";
 
@@ -214,6 +309,21 @@ public class MethodLibrary  {
 		return element;
 	}
 
+	/** nc_GetTableElement method in MethodLibrary is to get event details from Netcool event viewer table.
+	 * @param driver
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 *
+	 */
+	
+	public static String nc_GetTableElement(WebDriver driver, int rownum,int colnum){
+		action = new Actions(driver);
+		WebElement ele = driver.findElement(By.xpath("//*[@id='ns__30899058_jsel_div1_mainTable']/div[3]/div[2]/div["+rownum+"]/table/tbody/tr/td["+colnum+"]"));
+		action.moveToElement(ele).perform(); 
+		String value= ele.getText();
+		return value;
+	}
+	
 	/* sendKeys method  */
 	public static void sendKeys(WebDriver driver,String identifier, String Value) throws FileNotFoundException, IOException{
 		if(Value!=null)
@@ -231,9 +341,6 @@ public class MethodLibrary  {
 		WebDriverWait wait = new WebDriverWait(driver, 15);
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(properties.getProperty(xpathExpression))));
 	}
-
-
-
 
 	public static void checkEleVisibility(WebDriver driver,String xpathExpression) throws FileNotFoundException, IOException{
 		properties.load(new FileReader(".//Data//ObjectReository.properties"));
@@ -283,7 +390,6 @@ public class MethodLibrary  {
 		driver.manage().window().maximize();
 	}
 
-
 	/* swtich to child window and back to parent window */
 	// Store the current window handle
 
@@ -298,8 +404,6 @@ public class MethodLibrary  {
 	}
 
 
-
-
 	/*   actionContolplusrightarrow       */
 
 
@@ -308,10 +412,6 @@ public class MethodLibrary  {
 		Actions action = new Actions(driver);
 		action.keyDown(Keys.CONTROL).sendKeys(Keys.RIGHT).sendKeys(Keys.ENTER).perform();
 	}
-
-
-
-
 
 	/* backspace method  */
 
@@ -325,12 +425,7 @@ public class MethodLibrary  {
 		r.keyRelease(KeyEvent.VK_BACK_SPACE);
 	}
 
-
-
-
 	/* checkEleVisibility method  */
-
-
 
 	/* clear method  */
 
@@ -340,8 +435,8 @@ public class MethodLibrary  {
 
 	/* click method  */
 
-	public static void clicknHold(WebDriver driver,String identifier)
-	{
+	public static void clicknHold(WebDriver driver,String identifier) throws FileNotFoundException, IOException
+	{	properties.load(new FileReader(".//Data//ObjectReository.properties"));
 		//driver.findElement(By.xpath(properties.getProperty(identifier))).click();
 		action = new Actions(driver);
 		WebElement element = driver.findElement(By.xpath(properties.getProperty(identifier)));
@@ -357,7 +452,6 @@ public class MethodLibrary  {
 		element.click();
 	}
 
-
 	public static void click(WebDriver driver,String identifier) throws FileNotFoundException, IOException
 	{
 		//driver.findElement(By.xpath(properties.getProperty(identifier))).click();
@@ -367,7 +461,6 @@ public class MethodLibrary  {
 		action.moveToElement(element).click().build().perform();
 
 	}
-	
 	
 	public static WebElement getElementbyvlaue(WebDriver driver,String value){
 
@@ -389,7 +482,6 @@ public class MethodLibrary  {
 		}
 
 	}
-	
 		
 	public static void clickByValue(WebDriver driver,String value){
 		
@@ -430,18 +522,12 @@ public class MethodLibrary  {
 		action.moveToElement(element).clickAndHold(element).build().perform();
 	}
 	
-	
-
-	/* clickElementByText method  */	
+/* clickElementByText method  */	
 
 	public static void clickElementByText(WebDriver driver,String linkText)
 	{
 		driver.findElement(By.linkText(linkText)).click();;
 	}
-
-
-
-
 
 	public static WebElement fluentWait(final String identifier) {
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
@@ -457,14 +543,6 @@ public class MethodLibrary  {
 
 		return  foo;
 	};
-
-
-
-
-
-
-
-
 	/* clickOk method  */
 
 	public static void clickOk()
@@ -524,8 +602,6 @@ public class MethodLibrary  {
 		r.keyRelease(KeyEvent.VK_ENTER);		
 	}
 
-
-
 	/* EnterKeys method  */
 	public static void EnterKeys(String xpathExpression){
 
@@ -550,8 +626,7 @@ public class MethodLibrary  {
 		//action.keyDown(Keys.CONTROL).sendKeys(Keys.ARROW_RIGHT);
 	}
 
-	/* sendKeysJS method  */	
-
+	/* sendKeysJS method  */
 
 	public static void sendKeysJS (String elementId , CharSequence Value){
 
@@ -605,8 +680,6 @@ public class MethodLibrary  {
 		s3.sendKeys(Keys.TAB);
 	}
 
-
-
 	/* sendKeysActions method  */
 
 	public static void sendKeysActions(String xpathExpression, String Value) {
@@ -656,7 +729,6 @@ public class MethodLibrary  {
 		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(expression)))); 
 	}
 
-
 	/*
 	 * 
 	 */
@@ -675,8 +747,6 @@ public class MethodLibrary  {
 
 	}
 
-
-
 	/* captureScreenShotMethod method  */
 
 	public static String captureScreenShotMethod(String className) throws IOException{
@@ -694,7 +764,6 @@ public class MethodLibrary  {
 		return screenShotName;
 	}
 
-
 	public static void sendEnterKey(WebDriver driver, String identifier, Keys enter) throws FileNotFoundException, IOException {
 		// TODO Auto-generated method stub
 
@@ -705,7 +774,5 @@ public class MethodLibrary  {
 	}
 
 	/* End methods  */	
-
-
 
 }

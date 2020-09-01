@@ -5,25 +5,24 @@ import java.util.ArrayList;
 
 
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.aventstack.extentreports.ExtentTest;
+
 
 public class ExcelUtility {
 
 	private static XSSFSheet ExcelWSheet;
-
 	private static XSSFWorkbook ExcelWBook;
-
 	private static XSSFCell Cell;
-
 	private static XSSFRow Row;
-
 	private static String Path_TestData = ".//Data//";
-
 	private static String File_TestData = "Remedy_GetData.xlsx";
+	static ExtentTest logger;
 
 	public static void setExcelFile(String Path,String SheetName) throws Exception {
 
@@ -74,9 +73,9 @@ public class ExcelUtility {
 
 			Row = ExcelWSheet.getRow(RowNum);
 			int columns = Row.getLastCellNum();
-			System.out.println("num of col "+columns);
+			//System.out.println("num of col: "+columns);
 
-			for(int i = 0;i<columns;i++) {
+			for(int i = 0; i <columns; i++) {
 
 				Cell = Row.getCell(i);
 				Cell.setCellType(CellType.STRING);
@@ -92,6 +91,23 @@ public class ExcelUtility {
 			return null;
 
 		}
+	}
+	
+	
+	public static boolean verifyEmpty(ArrayList<String> rowData, int numOfCol)
+	{
+		boolean flag=true;
+		//System.out.println("number of col"+numOfCol);
+		
+		for(int i=0;i<=numOfCol;i++)
+		{
+			if(rowData.get(i).isEmpty())
+			{
+				flag=false;
+			}
+		}
+		
+		return flag;
 	}
 
 	public static void setCellData(String Result,  int RowNum, int ColNum) throws Exception	{
@@ -127,15 +143,11 @@ public class ExcelUtility {
 
 		}catch(Exception e){
 
-
 			throw (e);
-
-
 
 		}
 
 	}
-
 
 
 	public static void main(String[] args) {
@@ -193,6 +205,27 @@ public class ExcelUtility {
 		return rowcount;
 
 	}
+	public static int getNumberofAlarmkeys() {
 
+		int rowcount = ExcelWSheet.getLastRowNum()-ExcelWSheet.getFirstRowNum();
+		return rowcount;
+
+	}
+
+	public static int getNumberofComponentIDs() {
+
+		int rowcount = ExcelWSheet.getLastRowNum()-ExcelWSheet.getFirstRowNum();
+		return rowcount;
+
+	}
+	
+	public static int getNumberofCInames() {
+
+		int rowcount = ExcelWSheet.getLastRowNum()-ExcelWSheet.getFirstRowNum();
+		return rowcount;
+
+	}
 
 }
+
+

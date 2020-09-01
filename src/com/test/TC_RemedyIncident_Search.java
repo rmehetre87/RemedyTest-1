@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.ExtentReports;
@@ -21,6 +22,7 @@ import com.java.MethodLibrary;
 import com.listeners.ExtentITestListenerClassAdapter;
 
 //@Listeners({com.listeners.RetryListener.class,ExtentITestListenerClassAdapter.class})
+	
 public class TC_RemedyIncident_Search extends MethodLibrary{
 	
 	static WebDriver driver;
@@ -49,48 +51,52 @@ public class TC_RemedyIncident_Search extends MethodLibrary{
 			e.printStackTrace();
 		}
 	}
-		
   
-    @AfterTest(enabled = false)
+    @AfterTest(enabled = true)
     public void teardown() {
     	try {
 			Thread.sleep(5000);
+			
 			MethodLibrary.logout(driver);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
     	
     }
     
-    
-    @Test(priority = 1,retryAnalyzer= com.listeners.Retry.class,enabled = true)
+    @Test(priority = 1,retryAnalyzer= com.listeners.Retry.class, enabled = true)
 	public void openRemedyTest() throws FileNotFoundException, IOException{
 		
-		openRemedy(driver,"username2","pwd2");
+		openRemedy(driver,"username1","pwd1");
 	}
-    
-    
         
-    @Test(retryAnalyzer= com.listeners.Retry.class,enabled = true,priority = 3)	
+    @Test(retryAnalyzer= com.listeners.Retry.class, enabled = true, priority = 3)	
 	public void test_searchIncDetails() throws Exception {
 		
 		logger = ExtentITestListenerClassAdapter.getLogger();
+		
 		ArrayList<String> details = null;
 		
 		ExcelUtility.setExcelFile(Path_TestData + File_TestData, "Search_Inc");
 		
 		int incident_count = ExcelUtility.getNumberofIncidents();
+		System.out.println("inc count"+incident_count);
 		for(int i = 1; i<= incident_count;i++ ) {
 			
 			String incId = ExcelUtility.getCellData(i, 0);
 			System.out.println("Id is: "+incId);
 			if(incId.length()>1){
+				
 			//remedyObj.searchIncident(driver,incId);
+				
 			Thread.sleep(5000);
+			
 			details =	Inc_Utility.searchIncidentdtails(driver, incId,logger);
+			
 			System.out.println("for"+i+"round "+details.toString());
-			Inc_Utility.saveDetails(details, i);
+			
+			//Inc_Utility.saveDetails(details, i);
 			}
 			else{
 				System.out.println("Provide Incident Id:" + incId);
@@ -100,4 +106,43 @@ public class TC_RemedyIncident_Search extends MethodLibrary{
 		
 	}	
 	
+    @Test(enabled=false, priority = 3)
+    public void test_addVendorTask() throws Exception{
+    	
+		ArrayList<String> details = null;
+		ExcelUtility.setExcelFile(Path_TestData + File_TestData, "AddVandorTask");
+		
+		int incident_count = ExcelUtility.getNumberofIncidents();
+		
+		System.out.println("inc count"+incident_count);
+		
+	    	details = ExcelUtility.getRowData(1);
+	    	
+		String incId = details.get(1);
+		
+		logger = ExtentITestListenerClassAdapter.getLogger();
+		
+		Inc_Utility.searchIncident(driver, incId, logger);
+		
+		for(int i = 1; i<= incident_count;i++ ) {
+
+			details = ExcelUtility.getRowData(i);
+			if(details.get(0).equalsIgnoreCase("Yes")){
+				
+					Inc_Utility.addRelationshipCI(driver, logger, details);
+				
+					Inc_Utility.addVendorTask(driver, logger, details);
+			
+				}
+    			}
+		}
     }
+
+
+
+
+
+
+
+
+
