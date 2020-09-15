@@ -102,7 +102,7 @@ import sun.util.logging.resources.logging;
 		}
 		else
 		{
-			System.out.println("test expected111==="+actualValue);
+			
 			logger.fail("Field Actual Value: "+actualValue +"is not Mached with Expected Value: "+expectedValue);
 			String temp = MethodLibrary.getScreenshot(driver);
 			logger.fail("<b>"+"<font color="+"red>"+"Screenshot of failure"+"</font>"+"</b>", MediaEntityBuilder.createScreenCaptureFromPath(temp).build());

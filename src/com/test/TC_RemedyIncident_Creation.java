@@ -1,6 +1,7 @@
 package com.test;
 
 import org.testng.annotations.Test;
+import org.testng.annotations.Test;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -27,7 +28,7 @@ import com.java.Inc_Utility;
 import com.java.MethodLibrary;
 import com.listeners.ExtentITestListenerClassAdapter;
 
-//@Listeners({com.listeners.RetryListener.class,ExtentITestListenerClassAdapter.class})
+@Listeners({com.listeners.RetryListener.class,ExtentITestListenerClassAdapter.class})
 
 public class TC_RemedyIncident_Creation extends MethodLibrary{
 	
@@ -51,6 +52,7 @@ public class TC_RemedyIncident_Creation extends MethodLibrary{
 			context.setAttribute("webDriver", driver);
 			extent = ExtentReportUtility.reportSetup();
 			context.setAttribute("extent", extent);
+			openRemedy(driver,"username1","pwd1");
 
 		}
 		catch(Exception e) {
@@ -59,27 +61,12 @@ public class TC_RemedyIncident_Creation extends MethodLibrary{
 		}
 	}
 	
-	@Test(priority = 1,retryAnalyzer= com.listeners.Retry.class, enabled = true)
+	/*@Test(priority = 1,retryAnalyzer= com.listeners.Retry.class, enabled = true)
 	public void openRemedyTest() throws FileNotFoundException, IOException{
 			
 			openRemedy(driver,"username1","pwd1");
-		}
+		}*/
 	 
-  
-    @AfterTest(enabled = false)
-    public void teardown() {
-    	try {
-    		
-			Thread.sleep(5000);
-			MethodLibrary.logout(driver);
-			
-		} catch (InterruptedException e) {
-			
-			e.printStackTrace();
-		}
-    	
-    }
-    
      
     @DataProvider(name="dp_CreateInc")
     public Object[] dp_CreateInc() throws Exception{
@@ -108,7 +95,7 @@ public class TC_RemedyIncident_Creation extends MethodLibrary{
     }
 	
 	
-	@Test(enabled=true, priority = 2)	
+	@Test(enabled=true, priority = 1)	
 	public void test_createInc() throws Exception {
 	
 		ArrayList<String> rowdata = null;
@@ -127,7 +114,7 @@ public class TC_RemedyIncident_Creation extends MethodLibrary{
 				MethodLibrary.click(driver,"Applications_btn");
 				MethodLibrary.click(driver,"IncidentMgmt_btn");
 				getElement(driver,"newIncident_btn").click();
-				Thread.sleep(7000);
+				Thread.sleep(5000);
 				
 				String incNum = Inc_Utility.createInc(driver,rowdata,counter,logger);
 				System.out.println("Incident number: "+incNum);
@@ -165,6 +152,18 @@ public class TC_RemedyIncident_Creation extends MethodLibrary{
 		
 	}
 	
-  
+	@AfterTest(enabled = true)
+    public void teardown() {
+    	try {
+    		
+			Thread.sleep(5000);
+			MethodLibrary.logout(driver);
+			
+		} catch (InterruptedException e) {
+			
+			e.printStackTrace();
+		}
+    	
+    } 
 	
 }

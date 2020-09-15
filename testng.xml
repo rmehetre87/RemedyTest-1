@@ -1,26 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Suite">
+<suite name="Remedy TestSuite">
 
-<test thread-count="1" name="Test" parallel="none">
-    <classes>
+<listeners>
       
-     <class name="com.test.TC_VerifyComputerSystem_data"/>
-     
-     </classes>
-     
-     </test>
-     
-     <test thread-count="1" name="Test1" parallel="none">
-    <classes>
+      <listener class-name="com.listeners.ExtentITestListenerClassAdapter"/>
       
-     <class name="com.test.TC_VerifyBusinessApplication_data"/>
-     
-     </classes>
-     
-     </test>
-     
+  </listeners>
 
+  <test thread-count="1" name="Test5">
+    	<classes>
+      		<class name="com.test.TC_RemedyWorkOrder"/>
+    	</classes>
+	</test>
+	
+	 <!-- <test thread-count="1" name="Test1">
+    	<classes>
+      		<class name="com.test.TC_RemedyIncident_Update"/>
+    	</classes>
+	</test> 
+	
+	<test thread-count="1" name="Test2">
+    	<classes>
+      		<class name="com.test.TC_RemedyWorkOrder"/>
+    	</classes>
+	</test>
+	
+	
+	<test thread-count="1" name="Test">
+    	<classes>
+      		<class name="com.test.TC_RemedyIncident_Creation"/>
+    	</classes>
+	</test>
 
+	<test thread-count="1" name="Test3">
+    	<classes>
+      		<class name="com.test.TC_NetCoolRemedyInc"/>
+    	</classes>
+	</test>
+	
+	<test thread-count="1" name="Test4">
+    	<classes>
+      		<class name="com.test.TC_RemedyIncident_Search"/>
+    	</classes>
+	</test>
+	
+	<test thread-count="1" name="Test5">
+    	<classes>
+      		<class name="com.test.TC_Netcool_SearchDetails"/>
+    	</classes>
+	</test> -->
+      
+      
  
-</suite> <!-- Suite -->
+</suite> <!-- Remedy TestSuite -->

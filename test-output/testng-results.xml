@@ -1,32 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
+<testng-results skipped="0" failed="0" ignored="1" total="2" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="101773" started-at="2020-09-01T16:45:58 IST" finished-at="2020-09-01T16:47:40 IST">
+  <suite name="Remedy TestSuite" duration-ms="31947" started-at="2020-09-14T20:11:44 IST" finished-at="2020-09-14T20:12:16 IST">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="101773" started-at="2020-09-01T16:45:58 IST" finished-at="2020-09-01T16:47:40 IST">
-      <class name="com.test.TC_VerifyComputerSystem_data">
-        <test-method status="PASS" signature="beforeTest(org.testng.ITestContext)[pri:0, instance:com.test.TC_VerifyComputerSystem_data@9a3d1d]" name="beforeTest" is-config="true" duration-ms="19506" started-at="2020-09-01T16:45:58 IST" finished-at="2020-09-01T16:46:18 IST">
+    <test name="Test5" duration-ms="31947" started-at="2020-09-14T20:11:44 IST" finished-at="2020-09-14T20:12:16 IST">
+      <class name="com.test.TC_RemedyWorkOrder">
+        <test-method status="PASS" signature="beforeTest(org.testng.ITestContext)[pri:0, instance:com.test.TC_RemedyWorkOrder@6be70a]" name="beforeTest" is-config="true" duration-ms="11726" started-at="2020-09-14T20:11:44 IST" finished-at="2020-09-14T20:11:55 IST">
           <params>
             <param index="0">
               <value>
-                <![CDATA[org.testng.TestRunner@1f13be1]]>
+                <![CDATA[org.testng.TestRunner@16278d]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeTest -->
-        <test-method status="PASS" signature="Test_CID_ComputerSystem()[pri:1, instance:com.test.TC_VerifyComputerSystem_data@9a3d1d]" name="Test_CID_ComputerSystem" duration-ms="79776" started-at="2020-09-01T16:46:18 IST" finished-at="2020-09-01T16:47:38 IST">
+        <test-method status="PASS" signature="test_searchWorkOrder(org.testng.ITestContext)[pri:2, instance:com.test.TC_RemedyWorkOrder@6be70a]" name="test_searchWorkOrder" duration-ms="12668" started-at="2020-09-14T20:11:56 IST" finished-at="2020-09-14T20:12:08 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@16278d]]>
+              </value>
+            </param>
+          </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- Test_CID_ComputerSystem -->
-        <test-method status="PASS" signature="teardown()[pri:0, instance:com.test.TC_VerifyComputerSystem_data@9a3d1d]" name="teardown" is-config="true" duration-ms="2333" started-at="2020-09-01T16:47:38 IST" finished-at="2020-09-01T16:47:40 IST">
+        </test-method> <!-- test_searchWorkOrder -->
+        <test-method status="PASS" signature="teardown()[pri:0, instance:com.test.TC_RemedyWorkOrder@6be70a]" name="teardown" is-config="true" duration-ms="7384" started-at="2020-09-14T20:12:08 IST" finished-at="2020-09-14T20:12:16 IST">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- teardown -->
-      </class> <!-- com.test.TC_VerifyComputerSystem_data -->
-    </test> <!-- Default test -->
-  </suite> <!-- Default suite -->
+      </class> <!-- com.test.TC_RemedyWorkOrder -->
+    </test> <!-- Test5 -->
+  </suite> <!-- Remedy TestSuite -->
 </testng-results>

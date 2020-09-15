@@ -1,5 +1,6 @@
 package com.test;
 
+import org.testng.annotations.Test;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -50,6 +51,7 @@ public class TC_RemedyIncident_Update extends MethodLibrary{
 			context.setAttribute("webDriver", driver);
 			extent = ExtentReportUtility.reportSetup();
 			context.setAttribute("extent", extent);
+			openRemedy(driver,"username1","pwd1");
 			
 
 		}
@@ -59,25 +61,14 @@ public class TC_RemedyIncident_Update extends MethodLibrary{
 		}
 	}
   
-    @AfterTest(enabled = true)
-    public void teardown() {
-    	try {
-			Thread.sleep(5000);
-			MethodLibrary.logout(driver);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-    }
     
-    @Test(priority = 1,retryAnalyzer= com.listeners.Retry.class,enabled = true)
+    /*@Test(priority = 1,retryAnalyzer= com.listeners.Retry.class,enabled = true)
 	public void openRemedyTest() throws FileNotFoundException, IOException{
 		
 		openRemedy(driver,"username1","pwd1");
-	}
+	}*/
    
-	
+
     @DataProvider(name="dp_UpdateInc")
     public Object[] dp_UpdateInc() throws Exception{
     	
@@ -104,10 +95,11 @@ public class TC_RemedyIncident_Update extends MethodLibrary{
     }
 
     
-    @Test(dataProvider="dp_UpdateInc",retryAnalyzer= com.listeners.Retry.class, enabled = true, priority = 4)	
+    @Test(dataProvider="dp_UpdateInc",retryAnalyzer= com.listeners.Retry.class, enabled = true, priority = 1)	
 	public void test_updateInc(ArrayList<String> rowdata,ITestContext context) throws Exception {
 			
     		logger = ExtentITestListenerClassAdapter.getLogger();
+    		
     		String incId = rowdata.get(0);
     		
 			System.out.println("Id is: "+incId);
@@ -121,6 +113,18 @@ public class TC_RemedyIncident_Update extends MethodLibrary{
 			Inc_Utility.updateIncident(driver,logger,rowdata);
 			
 		}
+    
+    @AfterTest(enabled = true)
+    public void teardown() {
+    	try {
+			Thread.sleep(5000);
+			MethodLibrary.logout(driver);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    }
 
 
 }

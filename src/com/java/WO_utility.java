@@ -74,6 +74,7 @@ public class WO_utility {
 							workOrder_num = woNum[0];
 							System.out.println("Created Inc number: "+workOrder_num);
 							ExcelUtility.setCellData(workOrder_num, rownum, i);
+							driver.wait(7000);
 						//Assert.assertEquals("", workOrder_num);
 					
 				} catch (FileNotFoundException e) {
@@ -91,8 +92,10 @@ public class WO_utility {
 					e.printStackTrace();
 				}
 				}
+		
 		logger.info("WorkOrder created :" +workOrder_num);
 		return workOrder_num;
+		
 			
 	}
 

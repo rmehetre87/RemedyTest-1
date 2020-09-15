@@ -1,5 +1,6 @@
 package com.test;
 
+import org.testng.annotations.Test;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -50,6 +51,8 @@ public class TC_NetCoolRemedyInc extends MethodLibrary {
 			context.setAttribute("webDriver", driver);
 			extent = ExtentReportUtility.reportSetup();
 			context.setAttribute("extent", extent);
+			openRemedy(driver,"username1","pwd1");
+			
 		}
 		catch(Exception e) {
 
@@ -58,11 +61,11 @@ public class TC_NetCoolRemedyInc extends MethodLibrary {
 	}
 
 
-	@Test(priority = 1,enabled=true,retryAnalyzer= com.listeners.Retry.class)
+	/*@Test(priority = 1,enabled=true,retryAnalyzer= com.listeners.Retry.class)
 	public void openRemedyTest() throws FileNotFoundException, IOException{
 
 		openRemedy(driver,"username1","pwd1");
-	}
+	}*/
 
 
 	@Test(priority = 2, enabled=true)

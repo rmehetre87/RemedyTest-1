@@ -1,6 +1,7 @@
 package com.test;
 
 import org.testng.annotations.Test;
+import org.testng.annotations.Test;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
