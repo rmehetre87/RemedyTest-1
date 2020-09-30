@@ -49,7 +49,7 @@ public class TC_NetCoolRemedyInc extends MethodLibrary {
 			properties.load(new FileReader(".//Data//ObjectReository.properties"));
 			driver = openBrowser("Chrome");
 			context.setAttribute("webDriver", driver);
-			extent = ExtentReportUtility.reportSetup();
+			extent = ExtentReportUtility.reportSetup("TC_NetCoolRemedyInc");
 			context.setAttribute("extent", extent);
 			openRemedy(driver,"username1","pwd1");
 			

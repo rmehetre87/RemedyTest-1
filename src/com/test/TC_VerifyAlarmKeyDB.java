@@ -51,7 +51,7 @@ public class TC_VerifyAlarmKeyDB extends MethodLibrary {
 			properties.load(new FileReader(".//Data//ObjectReository.properties"));
 			driver = openBrowser("Chrome");
 			context.setAttribute("webDriver", driver);
-			extent = ExtentReportUtility.reportSetup();
+			extent = ExtentReportUtility.reportSetup("TC_VerifyAlarmKeyDB");
 			context.setAttribute("extent", extent);
 			openCMDB(driver,"username","pwd");
 		}

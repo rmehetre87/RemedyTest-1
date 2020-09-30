@@ -27,7 +27,7 @@ import com.java.Inc_Utility;
 import com.java.MethodLibrary;
 import com.listeners.ExtentITestListenerClassAdapter;
 
-//@Listeners({com.listeners.RetryListener.class,ExtentITestListenerClassAdapter.class})
+@Listeners({com.listeners.RetryListener.class,ExtentITestListenerClassAdapter.class})
 
 public class TC_RemedyIncident_Update extends MethodLibrary{
 	
@@ -49,7 +49,7 @@ public class TC_RemedyIncident_Update extends MethodLibrary{
 			properties.load(new FileReader(".//Data//ObjectReository.properties"));
 			driver = openBrowser("Chrome");
 			context.setAttribute("webDriver", driver);
-			extent = ExtentReportUtility.reportSetup();
+			extent = ExtentReportUtility.reportSetup("TC_RemedyIncident_Update");
 			context.setAttribute("extent", extent);
 			openRemedy(driver,"username1","pwd1");
 			
@@ -114,7 +114,7 @@ public class TC_RemedyIncident_Update extends MethodLibrary{
 			
 		}
     
-    @AfterTest(enabled = true)
+    @AfterTest(enabled = false)
     public void teardown() {
     	try {
 			Thread.sleep(5000);

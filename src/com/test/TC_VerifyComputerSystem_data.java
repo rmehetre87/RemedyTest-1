@@ -59,7 +59,7 @@ public class TC_VerifyComputerSystem_data extends MethodLibrary {
 			properties.load(new FileReader(".//Data//ObjectReository.properties"));
 			driver = openBrowser("Chrome");
 			context.setAttribute("webDriver", driver);
-			extent = ExtentReportUtility.reportSetup();
+			extent = ExtentReportUtility.reportSetup("TC_VerifyComputerSystem_data");
 			context.setAttribute("extent", extent);
 			openCMDB(driver,"username","pwd");
 		}

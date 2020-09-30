@@ -47,10 +47,11 @@ public class TC_RemedyIncident_Creation extends MethodLibrary{
 	public void beforeTest(ITestContext context) {
 		properties = new Properties();	
 		try {
+			
 			properties.load(new FileReader(".//Data//ObjectReository.properties"));
 			driver = openBrowser("Chrome");
 			context.setAttribute("webDriver", driver);
-			extent = ExtentReportUtility.reportSetup();
+			extent = ExtentReportUtility.reportSetup("TC_RemedyIncident_Creation");
 			context.setAttribute("extent", extent);
 			openRemedy(driver,"username1","pwd1");
 
@@ -77,7 +78,7 @@ public class TC_RemedyIncident_Creation extends MethodLibrary{
 		System.out.println("incident count"+incident_count);
 		ArrayList<String>[] al = new ArrayList[incident_count];
 
-		for(int i = 1; i<= incident_count;i++ ) {
+		for(int i = 1; i<= incident_count; i++ ) {
 			
 			rowdata = ExcelUtility.getRowData(i);
 			//System.out.println("row data "+rowdata);
@@ -101,7 +102,7 @@ public class TC_RemedyIncident_Creation extends MethodLibrary{
 		ArrayList<String> rowdata = null;
 		ExcelUtility.setExcelFile(Path_TestData + File_TestData, "Create_Inc");
 		int incident_count = ExcelUtility.getNumberofIncidents();
-		//ArrayList<String>[] al = new ArrayList[incident_count];
+		ArrayList<String>[] al = new ArrayList[incident_count];
 
 		for(int i = 1; i<= incident_count;i++ ) {
 
@@ -114,19 +115,21 @@ public class TC_RemedyIncident_Creation extends MethodLibrary{
 				MethodLibrary.click(driver,"Applications_btn");
 				MethodLibrary.click(driver,"IncidentMgmt_btn");
 				getElement(driver,"newIncident_btn").click();
+				
 				Thread.sleep(5000);
 				
 				String incNum = Inc_Utility.createInc(driver,rowdata,counter,logger);
 				System.out.println("Incident number: "+incNum);
 				counter++;
 		}
-		else{
+		else if(rowdata.get(0).equalsIgnoreCase("No")){
 			counter++;
 			System.out.println("Test Skipped!!");
 			logger.info("A Test Skipped!!");
+			
 		}
 		
-		System.out.println("counter after increment: "+counter);
+		//System.out.println("counter after increment: "+counter);
 		}		
 	}
 	
@@ -152,7 +155,7 @@ public class TC_RemedyIncident_Creation extends MethodLibrary{
 		
 	}
 	
-	@AfterTest(enabled = true)
+	@AfterTest(enabled = false)
     public void teardown() {
     	try {
     		

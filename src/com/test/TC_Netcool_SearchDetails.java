@@ -41,7 +41,7 @@ public class TC_Netcool_SearchDetails extends MethodLibrary {
 			properties.load(new FileReader(".//Data//ObjectReository.properties"));
 			driver = openBrowser("Chrome");
 			context.setAttribute("webDriver", driver);
-			extent = ExtentReportUtility.reportSetup();
+			extent = ExtentReportUtility.reportSetup("TC_Netcool_SearchDetails");
 			context.setAttribute("extent", extent);
 		}
 		catch(Exception e) {

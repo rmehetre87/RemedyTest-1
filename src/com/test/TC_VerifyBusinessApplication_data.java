@@ -58,7 +58,7 @@ public class TC_VerifyBusinessApplication_data extends MethodLibrary {
 			properties.load(new FileReader(".//Data//ObjectReository.properties"));
 			driver = openBrowser("Chrome");
 			context.setAttribute("webDriver", driver);
-			extent = ExtentReportUtility.reportSetup();
+			extent = ExtentReportUtility.reportSetup("TC_VerifyBusinessApplication_data");
 			context.setAttribute("extent", extent);
 			openCMDB(driver,"username","pwd");
 		}

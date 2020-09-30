@@ -53,7 +53,7 @@ public class TC_CMDBvalidations extends MethodLibrary {
    properties.load(new FileReader(".//Data//ObjectReository.properties"));
    driver = openBrowser("Chrome");
    context.setAttribute("webDriver", driver);
-   extent = ExtentReportUtility.reportSetup();
+   extent = ExtentReportUtility.reportSetup("TC_CMDBvalidations");
    context.setAttribute("extent", extent);
    openCMDB(driver,"username","pwd");
   }

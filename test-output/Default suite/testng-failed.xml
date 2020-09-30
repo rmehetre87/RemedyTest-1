@@ -3,13 +3,13 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.test.TC_RemedyIncident_Creation">
+      <class name="com.test.TC_RemedyIncident_Search">
         <methods>
-          <include name="teardown"/>
-          <include name="test_createInc"/>
           <include name="beforeTest"/>
+          <include name="teardown"/>
+          <include name="test_addVendorTask"/>
         </methods>
-      </class> <!-- com.test.TC_RemedyIncident_Creation -->
+      </class> <!-- com.test.TC_RemedyIncident_Search -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

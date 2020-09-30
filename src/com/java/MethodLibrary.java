@@ -16,7 +16,6 @@ import java.util.function.Function;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.By.ById;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
@@ -26,7 +25,6 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.CapabilityType;
@@ -36,16 +34,13 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
-import org.testng.asserts.Assertion;
 import org.testng.asserts.SoftAssert;
 
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
-import com.aventstack.extentreports.model.Log;
+import org.openqa.selenium.*;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
-import freemarker.log.Logger;
-import sun.util.logging.resources.logging;
 
 	public class MethodLibrary  {
 
@@ -67,6 +62,9 @@ import sun.util.logging.resources.logging;
 			DesiredCapabilities cap=DesiredCapabilities.chrome();
 			cap.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 			System.setProperty("webdriver.chrome.driver","C:\\OSS\\chromedriver_win32\\chromedriver.exe");
+			
+			//driver = new HtmlUnitDriver(cap);
+			
 			driver = new ChromeDriver(cap);
 			break;
 
@@ -153,7 +151,7 @@ import sun.util.logging.resources.logging;
 		properties.load(new FileReader(".//Data//ObjectReository.properties"));
 		driver.get(properties.getProperty("test_URL"));
 		driver.findElement(By.id("username-id")).sendKeys(properties.getProperty(username)); //birajds1 jains9
-		driver.findElement(By.id("pwd-id")).sendKeys("Life@2020"); //testing123 Welcome@123
+		driver.findElement(By.id("pwd-id")).sendKeys("Ls@810629"); //testing123 Welcome@123
 		driver.findElement(By.name("login")).click();
 
 	}
@@ -216,6 +214,17 @@ import sun.util.logging.resources.logging;
 			properties.load(new FileReader(".//Data//ObjectReository.properties"));
 			
 			driver.findElement(By.xpath(properties.getProperty("Logout_xpath"))).click();
+			
+			try {
+				Alert alert = driver.switchTo().alert();
+				alert.accept();
+
+			}
+			catch(NoAlertPresentException e) {
+				System.out.println("No alert present!");
+
+			}
+			
 			driver.quit();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -519,7 +528,7 @@ import sun.util.logging.resources.logging;
 		//driver.findElement(By.xpath(properties.getProperty(identifier))).click();
 		action = new Actions(driver);
 		WebElement element = getElementbyvlaue(driver,value);
-		action.moveToElement(element).clickAndHold(element).build().perform();
+		action.moveToElement(element).click(element).build().perform();
 	}
 	
 /* clickElementByText method  */	

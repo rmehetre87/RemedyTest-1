@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite guice-stage="DEVELOPMENT" name="Failed suite [Remedy TestSuite]">
-  <listeners>
-    <listener class-name="com.listeners.ExtentITestListenerClassAdapter"/>
-  </listeners>
-  <test thread-count="5" name="Test5(failed)">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
+  <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.test.TC_RemedyWorkOrder">
+      <class name="com.test.TC_RemedyIncident_Search">
         <methods>
-          <include name="test_searchWorkOrder" invocation-numbers="0"/>
-          <include name="teardown"/>
           <include name="beforeTest"/>
+          <include name="teardown"/>
+          <include name="test_addVendorTask"/>
         </methods>
-      </class> <!-- com.test.TC_RemedyWorkOrder -->
+      </class> <!-- com.test.TC_RemedyIncident_Search -->
     </classes>
-  </test> <!-- Test5(failed) -->
-</suite> <!-- Failed suite [Remedy TestSuite] -->
+  </test> <!-- Default test(failed) -->
+</suite> <!-- Failed suite [Default suite] -->

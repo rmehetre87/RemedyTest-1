@@ -36,6 +36,7 @@ public class TC_ChangeManagement extends MethodLibrary{
 								properties.load(new FileReader(".//Data//ObjectReository.properties"));
 								driver = openBrowser("Chrome");
 								context.setAttribute("webDriver", driver);
+								openRemedy(driver,"username1","pwd1");
 								
 							}
 							catch(Exception e) {
@@ -45,11 +46,11 @@ public class TC_ChangeManagement extends MethodLibrary{
 		  }
 		
 	
-	@Test(priority = 1,retryAnalyzer= com.listeners.Retry.class)
+	/*@Test(priority = 1,retryAnalyzer= com.listeners.Retry.class)
 	public void openRemedyTest() throws FileNotFoundException, IOException{
 		
 		openRemedy(driver,"username1","pwd1");
-	}
+	}*/
 	
 	@Test(dependsOnMethods = "openRemedyTest",retryAnalyzer= com.listeners.Retry.class, enabled = true, priority = 2)
     public void test_createCRQ() throws Exception {
@@ -59,7 +60,7 @@ public class TC_ChangeManagement extends MethodLibrary{
 	}
 	
 	
-	@Test(enabled = true,retryAnalyzer= com.listeners.Retry.class, priority = 3,dependsOnMethods = "openRemedyTest")
+	@Test(enabled = true,retryAnalyzer= com.listeners.Retry.class, priority = 3, dependsOnMethods = "openRemedyTest")
 	public void test_searchCRQ() throws Exception{
 		
 		ExcelUtility.setExcelFile(Path_TestData + File_TestData, "CRQ_search");

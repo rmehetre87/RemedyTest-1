@@ -25,6 +25,7 @@ import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.ITestContext;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterTest;
 
 @Listeners(ExtentITestListenerClassAdapter.class)
@@ -41,10 +42,11 @@ public class TC_RemedyWorkOrder extends MethodLibrary {
 	public void beforeTest(ITestContext context) {
 					properties = new Properties();	
 						try {
+							ITestResult result = null;
 								properties.load(new FileReader(".//Data//ObjectReository.properties"));
 								driver = openBrowser("Chrome");
 								context.setAttribute("webDriver", driver);
-								extent = ExtentReportUtility.reportSetup();
+								extent = ExtentReportUtility.reportSetup("TC_RemedyWorkOrder");
 								context.setAttribute("extent", extent);
 								openRemedy(driver,"username1","pwd1");
 								

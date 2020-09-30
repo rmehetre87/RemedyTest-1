@@ -23,6 +23,7 @@ import org.testng.ITestContext;
 import org.testng.asserts.SoftAssert;
 
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
 
 public class Inc_Utility {
 
@@ -78,7 +79,7 @@ public class Inc_Utility {
 
 	}
 
-	public static void searchIncident(WebDriver driver, String incId,ExtentTest logger) {
+	public static void searchIncident(WebDriver driver, String incId, ExtentTest logger) {
         
 		
 		try {
@@ -118,35 +119,35 @@ public class Inc_Utility {
 	public static void addCI(WebDriver driver,ExtentTest logger, String value) throws FileNotFoundException, IOException, InterruptedException{
 		
 		if(value.length()>1){
-						SoftAssert softassert = new SoftAssert();  
-						String windowhandle = driver.getWindowHandle();
-						softassert.assertTrue(MethodLibrary.checkElementPresent(driver,"CI_searchIcon"));
-						MethodLibrary.click(driver,"CI_searchIcon");
-						Thread.sleep(1000);
-						
-						Set<String> handles = driver.getWindowHandles();
-				
-						for (String handle : handles) {
-							if (handle != windowhandle) {
-								driver.switchTo().window(handle);
-							}
-						}
-						
-						MethodLibrary.sendKeys(driver,"CI_searchbox", value);
-						MethodLibrary.click(driver,"CI_searchBtn");
-						Thread.sleep(3000);
-						softassert.assertTrue(MethodLibrary.checkElementPresent(driver,"CI_value"));
-						MethodLibrary.click(driver,"CI_value");
-						MethodLibrary.click(driver,"CI_selectBtn");
-						Thread.sleep(2000);
-						
-						driver.switchTo().window(windowhandle);
-						
-						softassert.assertAll();
-						Thread.sleep(2000);
-				}
+			SoftAssert softassert = new SoftAssert();  
+			String windowhandle = driver.getWindowHandle();
+			softassert.assertTrue(MethodLibrary.checkElementPresent(driver,"CI_searchIcon"));
+			MethodLibrary.click(driver,"CI_searchIcon");
+			Thread.sleep(1000);
+			
+			Set<String> handles = driver.getWindowHandles();
 	
+			for (String handle : handles) {
+				if (handle != windowhandle) {
+					driver.switchTo().window(handle);
+				}
+			}
+			
+			MethodLibrary.sendKeys(driver,"CI_searchbox", value);
+			MethodLibrary.click(driver,"CI_searchBtn");
+			Thread.sleep(3000);
+			softassert.assertTrue(MethodLibrary.checkElementPresent(driver,"CI_value"));
+			MethodLibrary.click(driver,"CI_value");
+			MethodLibrary.click(driver,"CI_selectBtn");
+			Thread.sleep(2000);
+			
+			driver.switchTo().window(windowhandle);
+			
+			softassert.assertAll();
+			Thread.sleep(2000);
 	}
+
+}
 
 	
 	public static void removeCI(WebDriver driver,ITestContext context, String value) throws FileNotFoundException, IOException{
@@ -165,13 +166,22 @@ public class Inc_Utility {
 	public static void addRelationshipCI(WebDriver driver,ExtentTest logger, ArrayList<String> values) throws FileNotFoundException, IOException, InterruptedException{
 		
 		logger.info("On search incident details Page!!");
+		
 		WebDriverWait wait = new WebDriverWait(driver, 25);
+		
 		String windowhandle = driver.getWindowHandle();
 		System.out.println("window handle: "+windowhandle);
-		WebElement frame1 =  MethodLibrary.getElement(driver, "iFrameMsg_xpath");
-		driver.switchTo().frame(frame1);
 		
-		MethodLibrary.click(driver, "iFrameMsg_ok");
+		try {
+			WebElement frame1 =  MethodLibrary.getElement(driver, "iFrameMsg_xpath");
+			driver.switchTo().frame(frame1);
+			MethodLibrary.click(driver, "iFrameMsg_ok");
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
 		Thread.sleep(8000);
 		MethodLibrary.click(driver, "Relationship_tab");
 		logger.info("Adding CIs to Incident!!");
@@ -204,13 +214,21 @@ public class Inc_Utility {
 						System.out.println("Frame:" +frame2);
 					   	driver.switchTo().frame(frame2);
 					    MethodLibrary.click(driver, "iFrameMsg_ok");
-					   if(MethodLibrary.getElement(driver, "iFrameMsg_xpath").isDisplayed()){
-						   frame2 =  MethodLibrary.getElement(driver, "CI_frame");
-						   System.out.println("Frame:" +frame2);
-						   driver.switchTo().frame(frame2);
-						   MethodLibrary.click(driver, "iFrameMsg_ok");
-						   
-					   }
+					    
+					   
+						try {
+							if(MethodLibrary.getElement(driver, "iFrameMsg_xpath").isDisplayed()){
+								   frame2 =  MethodLibrary.getElement(driver, "CI_frame");
+								   System.out.println("Frame:" +frame2);
+								   driver.switchTo().frame(frame2);
+								   MethodLibrary.click(driver, "iFrameMsg_ok");
+								   
+							   }
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					
 					   
 					    Thread.sleep(3000);
 					    System.out.println("handles "+handles);
@@ -221,7 +239,15 @@ public class Inc_Utility {
 				
 			}	
 			
-			MethodLibrary.click(driver, "save_btn"); 				//Saving Incident 
+			String temp = MethodLibrary.getScreenshot(driver);
+			logger.info("<font color="+"black>"+"Screenshot: "+"</font>", MediaEntityBuilder.createScreenCaptureFromPath(temp).build());
+		
+			MethodLibrary.click(driver, "save_btn");			//Saving Incident
+			Thread.sleep(300);
+			String temp1 = MethodLibrary.getScreenshot(driver);
+			logger.info("<font color="+"black>"+"Screenshot: "+"</font>", MediaEntityBuilder.createScreenCaptureFromPath(temp).build());
+
+
 			logger.info("CIs added and saved to the Incident!!");
 	}
 	
@@ -268,6 +294,7 @@ public class Inc_Utility {
 						action.moveToElement(status).perform();
 						status.click();
 						driver.findElement(By.xpath(properties.getProperty("status_assigned_xpath"))).click();
+						
 						logger.pass("Status is updated to Assigned state!!");
 						break;
 		
@@ -282,6 +309,9 @@ public class Inc_Utility {
 							action.moveToElement(status).perform();
 							status.click();
 							driver.findElement(By.xpath(properties.getProperty("status_Inprogress_xpath"))).click();
+							//driver.findElement(By.xpath(properties.getProperty("Status_Reason_dropdown"))).click();
+							MethodLibrary.click(driver,"Status_Reason_dropdown");
+							
 							logger.pass("Status is updated to In-progress state!!");
 							break;
 						}
@@ -302,6 +332,8 @@ public class Inc_Utility {
 						MethodLibrary.click(driver,"status_reason");
 						Thread.sleep(1000);
 						MethodLibrary.click(driver,"status_reason_value");
+						logger.info("Status reason selected - Pending approval");
+												
 						logger.pass("Status is updated to Pending state!!");
 						break;
 		
@@ -510,15 +542,23 @@ public class Inc_Utility {
 	public static void addVendorTask(WebDriver driver,ExtentTest logger, ArrayList<String> data) throws FileNotFoundException, IOException, InterruptedException{
 		
 		properties.load(new FileReader(".//Data//ObjectReository.properties"));
+		
 		String windowhandle = driver.getWindowHandle();
 		WebDriverWait wait = new WebDriverWait(driver, 25);
-		/*logger.info("On search incident details Page!!");
 		
-		WebElement frame1 =  MethodLibrary.getElement(driver, "iFrameMsg_xpath");
-		driver.switchTo().frame(frame1);
+		logger.info("On search incident details Page!!");
 		
-		MethodLibrary.click(driver, "iFrameMsg_ok");*/
-		//driver.switchTo().defaultContent();
+		try {
+			WebElement frame1 =  MethodLibrary.getElement(driver, "iFrameMsg_xpath");
+			driver.switchTo().frame(frame1);
+			MethodLibrary.click(driver, "iFrameMsg_ok");
+			driver.switchTo().defaultContent();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		Thread.sleep(5000);
 		logger.info("Adding Vendor Task for "+data.get(1)+" Incident!!");
 		
@@ -540,8 +580,18 @@ public class Inc_Utility {
 			MethodLibrary.getElementbyvlaue(driver, data.get(7)).click(); //select managing operator
 			logger.info("Managing operator "+data.get(7)+" Selected!!");
 			
+			String temp2 = MethodLibrary.getScreenshot(driver);
+			logger.info("<font color="+"black>"+"Screenshot: "+"</font>", MediaEntityBuilder.createScreenCaptureFromPath(temp2).build());
+
+
+			
 			MethodLibrary.click(driver, "createbtn");
-			logger.info("Creating Task!!");
+			
+			String temp3 = MethodLibrary.getScreenshot(driver);
+			logger.info("<font color="+"black>"+"Screenshot: "+"</font>", MediaEntityBuilder.createScreenCaptureFromPath(temp2).build());
+
+			
+			logger.info("Vender task created!!");
 			
 			Set<String> handles = driver.getWindowHandles();
 			System.out.println("num of handle: "+handles.size());
@@ -611,6 +661,10 @@ public class Inc_Utility {
 			   
 			   MethodLibrary.sendKeys(driver, "summary_text", "Sample Vendor task Summary.");
 			   MethodLibrary.sendKeys(driver, "notes_text", "Sample Vendore task notes.");
+			   
+			   String temp = MethodLibrary.getScreenshot(driver);
+				logger.info("<font color="+"black>"+"Screenshot: "+"</font>", MediaEntityBuilder.createScreenCaptureFromPath(temp).build());
+
 			
 			   MethodLibrary.click(driver, "close_btn");
 			// MethodLibrary.click(driver, "sendToVandeor_btn");
@@ -650,19 +704,22 @@ public class Inc_Utility {
 					 */
 					MethodLibrary.sendKeys(driver,"IncModify_resolution_xpath", "Test Text");
 					MethodLibrary.getElement(driver,"IncModify_statusReason_xpath").click();
-			
+					
 					MethodLibrary.click(driver,"IncModify_selfRestored_xpath");
+					
+					//logger.info("Status reason updated to - Self Restored");
+						
 			
 					MethodLibrary.click(driver,"IncModify_rescat_tire1");
 					MethodLibrary.click(driver,"IncModify_autoResolved_tire1");
 			
-					MethodLibrary.click(driver,"IncModify_rescat_tire2");
+					/*MethodLibrary.click(driver,"IncModify_rescat_tire2");
 					MethodLibrary.click(driver,"IncModify_resolution_tire2");
 			
 					MethodLibrary.click(driver,"IncModify_rescat_tire3");
-					MethodLibrary.click(driver,"IncModify_resolution_tire3");
+					MethodLibrary.click(driver,"IncModify_resolution_tire3");*/
 			
-					MethodLibrary.sendKeys(driver,"IncModify_notes_xpath", "Test");
+					MethodLibrary.sendKeys(driver,"IncModify_notes_xpath", "Testing purpose");
 			
 					WebElement savebtn = driver.findElement(By.xpath(properties.getProperty("IncModify_savebtn_xpath")));
 					action.moveToElement(savebtn).perform();
@@ -907,6 +964,8 @@ public class Inc_Utility {
 							}
 							logger.info("Incident Impact value "+incData.get(i)+" selected!!");
 							i++;
+							
+							
 							switch (incData.get(i)) {
 				
 							case "1-Critical":
@@ -927,8 +986,9 @@ public class Inc_Utility {
 								break;
 							}
 							logger.info("Incident Urgency value "+incData.get(i)+" selected!!");
-							
 							i++;
+							
+							
 							MethodLibrary.click(driver,"Incident_type");
 							MethodLibrary.click(driver,"Inc_type_value");
 							i++;
@@ -936,12 +996,18 @@ public class Inc_Utility {
 							MethodLibrary.click(driver,"Assigned_group");
 							MethodLibrary.clicknHoldbyValue(driver,incData.get(i));
 							i++;
+							
 							MethodLibrary.clicknHoldbyValue(driver,incData.get(i));
 							i++;
 							MethodLibrary.clickByValue(driver,incData.get(i));
 							logger.info("Incident Assigned Group value "+incData.get(i)+" selected!!");
 							i++;
-														
+							
+							String temp = MethodLibrary.getScreenshot(driver);
+							logger.info("<font color="+"black>"+"Screenshot: "+"</font>", MediaEntityBuilder.createScreenCaptureFromPath(temp).build());
+
+							
+																											
 							Thread.sleep(500);
 							MethodLibrary.click(driver,"Service_field");
 							Thread.sleep(500);
@@ -956,6 +1022,15 @@ public class Inc_Utility {
 							logger.info("Incident Assignee value "+incData.get(i)+" selected!!");
 							}
 							i++;
+							
+							
+							
+							
+							
+							
+							
+							
+							
 							Thread.sleep(500);
 							MethodLibrary.onclick(driver,"categorizationTab_xpath");
 							System.out.println("categorizationTab clicked..");
@@ -963,32 +1038,101 @@ public class Inc_Utility {
 							
 							MethodLibrary.click(driver,"Sel_opCat_tier1");
 							MethodLibrary.clickByValue(driver,incData.get(i));
-				
 							i++;
+							
 							MethodLibrary.click(driver,"Sel_opCat_tier2");
 							MethodLibrary.clickByValue(driver,incData.get(i));
 							i++;
+							
 							MethodLibrary.click(driver,"Sel_opCat_tier3");
 							MethodLibrary.clickByValue(driver,incData.get(i));
 							i++;
+							
 							MethodLibrary.click(driver,"Sel_prodCat_tier1");
 							MethodLibrary.clickByValue(driver,incData.get(i));
 							i++;
+							
 							MethodLibrary.click(driver,"Sel_prodCat_tier2");
 							MethodLibrary.clickByValue(driver,incData.get(i));
 							i++;
+							
 							MethodLibrary.click(driver,"Sel_prodCat_tier3");
 							MethodLibrary.clickByValue(driver,incData.get(i));
 							i++;
+							
 							MethodLibrary.click(driver,"Sel_productName");
 							MethodLibrary.clickByValue(driver,incData.get(i));
 							i++;
+							
 							MethodLibrary.click(driver,"Sel_contactMethod_xpath");
 							MethodLibrary.clickByValue(driver,incData.get(i));
 				
 							MethodLibrary.click(driver,"resolution_categorization_xpath");
 							MethodLibrary.click(driver,"resolution_prodCat_clearBtn");
 							MethodLibrary.click(driver,"show_Categorization_xpath");
+							
+							switch (incData.get(22)) {
+							
+							case "New":
+								MethodLibrary.click(driver,"Status_Field");
+								MethodLibrary.click(driver,"Status_Field_New");
+								String temp5 = MethodLibrary.getScreenshot(driver);
+								logger.info("<font color="+"black>"+"Screenshot: "+"</font>", MediaEntityBuilder.createScreenCaptureFromPath(temp).build());
+								
+								break;
+								
+							case "Assigned":
+								MethodLibrary.click(driver,"Status_Field");
+								MethodLibrary.click(driver,"Status_Field_Assigned");
+								String temp4 = MethodLibrary.getScreenshot(driver);
+								logger.info("<font color="+"black>"+"Screenshot: "+"</font>", MediaEntityBuilder.createScreenCaptureFromPath(temp).build());
+								break;
+								
+							case "In Progress":
+								MethodLibrary.click(driver,"Status_Field");
+								MethodLibrary.click(driver,"Status_Field_Inprogress");
+								
+								String temp3 = MethodLibrary.getScreenshot(driver);
+								logger.info("<font color="+"black>"+"Screenshot: "+"</font>", MediaEntityBuilder.createScreenCaptureFromPath(temp).build());
+								break;
+								
+							case "Pending":
+								MethodLibrary.click(driver,"Status_Field");
+								MethodLibrary.click(driver,"Status_Field_Pending");
+							
+							case "Cancelled":
+								MethodLibrary.click(driver,"Status_Field");
+								MethodLibrary.click(driver,"Status_Field_Cancelled");
+								
+								MethodLibrary.click(driver,"Status_Reason_Feild");
+								MethodLibrary.click(driver,"Status_reason_Cancelled");
+								
+								String temp2 = MethodLibrary.getScreenshot(driver);
+								logger.info("<font color="+"black>"+"Screenshot: "+"</font>", MediaEntityBuilder.createScreenCaptureFromPath(temp).build());
+								break;
+								
+							case "Resolved":
+															
+								driver.findElement(By.xpath(properties.getProperty("status_resolved_xpath"))).click();
+								Thread.sleep(8000);
+								modify_InC(driver, windowhandle);
+								driver.switchTo().window(windowhandle);
+								Thread.sleep(2000);
+								logger.pass("Status is updated to Resolved state!!");
+								break;
+				
+							case "Closed":
+								driver.findElement(By.xpath(properties.getProperty("status_closed_xpath"))).click();
+								Thread.sleep(5000);
+								modify_InC(driver, windowhandle);
+								driver.switchTo().window(windowhandle);
+								Thread.sleep(3000);
+								break;	
+								
+							
+							}
+							logger.info("Incident Status Value "+incData.get(22)+" selected!!");
+							
 				
 							String incNum[] = MethodLibrary.getElement(driver,"new_Inc_number").getText().split(" ");
 							System.out.println("INC: "+incNum[0]);
@@ -1022,12 +1166,17 @@ public class Inc_Utility {
 								String incNumNew[] = MethodLibrary.getElement(driver,"new_Inc_number").getText().split(" ");
 								System.out.println("NewINC: "+incNumNew[0]);
 								Assert.assertNotEquals(incNum[0], incNumNew[0], "Error in New Incident creation.!!"+errorMsg);
+								
 							}
 				
 							incident_num = incNum[0];
 							System.out.println("Created Inc number: " + incident_num);
 							logger.pass("**** New Incident created " + incident_num + " ****");
-							ExcelUtility.setCellData(incident_num, rownum, i);
+							String temp1 = MethodLibrary.getScreenshot(driver);
+							logger.info("<font color="+"black>"+"Screenshot: "+"</font>", MediaEntityBuilder.createScreenCaptureFromPath(temp).build());
+
+							/*Thread.sleep(5000);
+							ExcelUtility.setCellData(incident_num, rownum, i);*/
 				
 				
 						}
