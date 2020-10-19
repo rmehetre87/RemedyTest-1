@@ -96,51 +96,8 @@ public class TC_RemedyIncident_Search extends MethodLibrary{
 		
 	}	
 	
-    @Test(enabled=true, priority = 3)
-    public void test_addVendorTask() throws Exception{
-    	
-    	ArrayList<String> details = null;
-		ExcelUtility.setExcelFile(Path_TestData + File_TestData, "AddVandorTask");
-		
-		int incident_count = ExcelUtility.getNumberofIncidents();
-		System.out.println("inc count"+incident_count);
-	    
-		details = ExcelUtility.getRowData(1);
-		
-		String incId = details.get(1);
-		
-		logger = ExtentITestListenerClassAdapter.getLogger();
-		Inc_Utility.searchIncident(driver, incId, logger);
-		
-		for(int i = 1; i<= incident_count; i++ ) {
-
-			details = ExcelUtility.getRowData(i);
-			if(details.get(0).equalsIgnoreCase("Yes")){
-				
-					Inc_Utility.addRelationshipCI(driver, logger, details);
-				
-					Inc_Utility.addVendorTask(driver, logger, details);
-			
-				}
-    			}
-		}
-    
-    @AfterTest(enabled = true)
-    public void teardown() {
-    	try {
-			Thread.sleep(5000);
-			
-			MethodLibrary.logout(driver);
-		} catch (InterruptedException e) {
-			
-			e.printStackTrace();
-		}
-    	
-    }
-    
-    
-    
-    }
+  
+}
 
 
 

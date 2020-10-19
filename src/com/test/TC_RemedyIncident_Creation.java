@@ -155,7 +155,7 @@ public class TC_RemedyIncident_Creation extends MethodLibrary{
 		
 	}
 	
-	@AfterTest(enabled = false)
+	@AfterTest(enabled = true)
     public void teardown() {
     	try {
     		

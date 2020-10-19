@@ -73,21 +73,27 @@ public class TC_VerifyBusinessApplication_data extends MethodLibrary {
 	public void Test_CID_BusinessApplication() throws Exception,RuntimeException  {
 
 		logger = ExtentITestListenerClassAdapter.getLogger();
+		
 		ExcelUtility.setExcelFile(Path_TestData + File_TestData, "CID_BusinessApplication");
+		
 		int ComponentID_count = ExcelUtility.getNumberofComponentIDs();
+		
 		int NoComponentID_count = 0, YesComponentID_count = 0, EmptyComponentID_count = 0;
+		
 		System.out.println("Number of Component IDs: "+ ComponentID_count);
 		
 		for(int i = 1; i<=ComponentID_count; i++ ) 
 		{
 			
 			String ComponentID = ExcelUtility.getCellData(i, 1);
+			
 			System.out.println("Verifying ComponentID: "+ComponentID);
+			
 			ArrayList<String> rowdata = ExcelUtility.getRowData(i);
 			
 			int numOfCol=12;
 			
-			boolean flag=ExcelUtility.verifyEmpty(rowdata,numOfCol);
+			boolean flag= ExcelUtility.verifyEmpty(rowdata, numOfCol);
 							
 			if(rowdata.get(0).equalsIgnoreCase("Yes") && flag==true)
 			{
@@ -95,6 +101,7 @@ public class TC_VerifyBusinessApplication_data extends MethodLibrary {
 				System.out.println("ComponentID Verified: "+rowdata);
 				CMDBUtility.verifyCID_BusinessApplication(logger, driver, ComponentID, rowdata);
 				YesComponentID_count++;
+				logger.log(Status.PASS,"Component ID successfully verified:  "+rowdata.get(1));
 			}
 			else if(flag==false)
 			{

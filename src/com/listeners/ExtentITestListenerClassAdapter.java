@@ -66,11 +66,11 @@ public class ExtentITestListenerClassAdapter implements ITestListener{
 				
 				String exceptionMsg = result.getThrowable().getMessage();
 				
-				logger.fail("<details>" + "<summary>"+ "<b>"+ "<font color="+"red>" +"Exception Occured:Click to see"
-							+"</font>"+"</b>"+"</summary>"+
-							exceptionMsg.replaceFirst(",","<br>")
-							+"</details>"+" \n"					
-						);
+				//logger.fail("<details>" + "<summary>"+ "<b>"+ "<font color="+"red>" +"Exception Occured:Click to see"
+							//+"</font>"+"</b>"+"</summary>"+
+							//exceptionMsg.replaceFirst(",","<br>")
+							//+"</details>"+" \n"					
+						//);
 				
 				
 				String temp = MethodLibrary.getScreenshot(driver);

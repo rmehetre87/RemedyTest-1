@@ -150,8 +150,8 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 		
 		properties.load(new FileReader(".//Data//ObjectReository.properties"));
 		driver.get(properties.getProperty("test_URL"));
-		driver.findElement(By.id("username-id")).sendKeys(properties.getProperty(username)); //birajds1 jains9
-		driver.findElement(By.id("pwd-id")).sendKeys("Ls@810629"); //testing123 Welcome@123
+		driver.findElement(By.id("username-id")).sendKeys(properties.getProperty(username));
+		driver.findElement(By.id("pwd-id")).sendKeys("");
 		driver.findElement(By.name("login")).click();
 
 	}
@@ -184,8 +184,8 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 		
 		properties.load(new FileReader(".//Data//ObjectReository.properties"));
 		driver.get(properties.getProperty("dev_NetcoolURL"));
-		driver.findElement(By.xpath(properties.getProperty("nc_userid_xpath"))).sendKeys(properties.getProperty(username)); //birajds1 jains9
-		driver.findElement(By.xpath(properties.getProperty("nc_pwd_xpath"))).sendKeys(properties.getProperty(password)); //testing123 Welcome@123
+		driver.findElement(By.xpath(properties.getProperty("nc_userid_xpath"))).sendKeys(properties.getProperty(username));
+		driver.findElement(By.xpath(properties.getProperty("nc_pwd_xpath"))).sendKeys(properties.getProperty(password));
 		driver.findElement(By.xpath(properties.getProperty("nc_loginBtn_xpath"))).click();
 		
 	}
@@ -202,8 +202,8 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 	caps.setCapability(ChromeOptions.CAPABILITY, options);
 	caps.setCapability("acceptInsecureCerts", true);*/
 		
-	driver.findElement(By.xpath(properties.getProperty("cmdb_userid_xpath"))).sendKeys(properties.getProperty(username)); //birajds1 jains9
-	driver.findElement(By.xpath(properties.getProperty("cmdb_pwd_xpath"))).sendKeys(properties.getProperty(password)); //testing123 Welcome@123
+	driver.findElement(By.xpath(properties.getProperty("cmdb_userid_xpath"))).sendKeys(properties.getProperty(username));
+	driver.findElement(By.xpath(properties.getProperty("cmdb_pwd_xpath"))).sendKeys(properties.getProperty(password));
 	driver.findElement(By.xpath(properties.getProperty("cmdb_loginBtn_xpath"))).click();
 	
 }
@@ -216,12 +216,11 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 			driver.findElement(By.xpath(properties.getProperty("Logout_xpath"))).click();
 			
 			try {
-				Alert alert = driver.switchTo().alert();
-				alert.accept();
-
+				driver.findElement(By.xpath(properties.getProperty("ConfirmSaveRequest_popup")));
+				driver.findElement(By.xpath(properties.getProperty("ConfirmSaveRequest_popup_yes"))).click();
 			}
 			catch(NoAlertPresentException e) {
-				System.out.println("No alert present!");
+				e.printStackTrace();
 
 			}
 			

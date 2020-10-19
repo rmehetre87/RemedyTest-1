@@ -97,9 +97,10 @@ public class ExcelUtility {
 	public static boolean verifyEmpty(ArrayList<String> rowData, int numOfCol)
 	{
 		boolean flag=true;
-		//System.out.println("number of col"+numOfCol);
 		
-		for(int i=0;i<=numOfCol;i++)
+		System.out.println("number of col"+numOfCol);
+		
+		for(int i=1; i<=numOfCol; i++)
 		{
 			if(rowData.get(i).isEmpty())
 			{

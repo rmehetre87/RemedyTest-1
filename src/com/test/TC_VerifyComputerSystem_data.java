@@ -77,7 +77,7 @@ public class TC_VerifyComputerSystem_data extends MethodLibrary {
 		
 		ExcelUtility.setExcelFile(Path_TestData + File_TestData, "CID_ComputerSystem");
 		
-		int ComponentID_count = ExcelUtility.getNumberofComponentIDs();
+		int ComponentID_count = ExcelUtility.getNumberofCInames();
 		
 		int NoComponentID_count = 0, YesComponentID_count = 0, EmptyComponentID_count = 0;
 		

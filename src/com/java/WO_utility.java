@@ -119,6 +119,7 @@ public class WO_utility {
 		
 		logger.info("searched work order is: " + woId);
 		
+		logger.info("Work order searched successfully done..!!: ");
 		
 	}
 	

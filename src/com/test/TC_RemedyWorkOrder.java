@@ -64,7 +64,7 @@ public class TC_RemedyWorkOrder extends MethodLibrary {
 	}*/
 	
 	
-    @Test(priority = 1, enabled = false)
+    @Test(priority = 1, enabled = true)
     public void test_createWorkOrder(ITestContext context) {
 	 
     	try{
@@ -92,7 +92,7 @@ public class TC_RemedyWorkOrder extends MethodLibrary {
 		}
     }
 
-	@Test(priority = 2, enabled = true)
+	@Test(priority = 2, enabled = false)
 	public void test_searchWorkOrder(ITestContext context) throws Exception {
 				
 			ExcelUtility.setExcelFile(Path_TestData + File_TestData, "WO_search");

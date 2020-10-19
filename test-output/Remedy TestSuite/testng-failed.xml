@@ -6,13 +6,13 @@
   </listeners>
   <test thread-count="5" name="Test5(failed)">
     <classes>
-      <class name="com.test.TC_RemedyIncident_Creation">
+      <class name="com.test.TC_VerifyBusinessApplication_data">
         <methods>
+          <include name="Test_CID_BusinessApplication"/>
           <include name="teardown"/>
-          <include name="test_createInc"/>
           <include name="beforeTest"/>
         </methods>
-      </class> <!-- com.test.TC_RemedyIncident_Creation -->
+      </class> <!-- com.test.TC_VerifyBusinessApplication_data -->
     </classes>
   </test> <!-- Test5(failed) -->
 </suite> <!-- Failed suite [Remedy TestSuite] -->

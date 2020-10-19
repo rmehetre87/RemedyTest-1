@@ -10,7 +10,7 @@
 
   <test thread-count="1" name="Test5">
     	<classes>
-      		<class name="com.test.TC_RemedyIncident_Update"/>
+      		<class name="com.test.TC_VerifyBusinessApplication_data"/>
     	</classes>
 	</test>
 	
