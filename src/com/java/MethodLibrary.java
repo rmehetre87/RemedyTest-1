@@ -152,8 +152,8 @@ import sun.util.logging.resources.logging;
 		
 		properties.load(new FileReader(".//Data//ObjectReository.properties"));
 		driver.get(properties.getProperty("test_URL"));
-		driver.findElement(By.id("username-id")).sendKeys(properties.getProperty(username)); //birajds1 jains9
-		driver.findElement(By.id("pwd-id")).sendKeys("Life@2020"); //testing123 Welcome@123
+		driver.findElement(By.id("username-id")).sendKeys(properties.getProperty(username));
+		driver.findElement(By.id("pwd-id")).sendKeys("");
 		driver.findElement(By.name("login")).click();
 
 	}
@@ -186,8 +186,8 @@ import sun.util.logging.resources.logging;
 		
 		properties.load(new FileReader(".//Data//ObjectReository.properties"));
 		driver.get(properties.getProperty("dev_NetcoolURL"));
-		driver.findElement(By.xpath(properties.getProperty("nc_userid_xpath"))).sendKeys(properties.getProperty(username)); //birajds1 jains9
-		driver.findElement(By.xpath(properties.getProperty("nc_pwd_xpath"))).sendKeys(properties.getProperty(password)); //testing123 Welcome@123
+		driver.findElement(By.xpath(properties.getProperty("nc_userid_xpath"))).sendKeys(properties.getProperty(username));
+		driver.findElement(By.xpath(properties.getProperty("nc_pwd_xpath"))).sendKeys(properties.getProperty(password));
 		driver.findElement(By.xpath(properties.getProperty("nc_loginBtn_xpath"))).click();
 		
 	}
@@ -204,8 +204,8 @@ import sun.util.logging.resources.logging;
 	caps.setCapability(ChromeOptions.CAPABILITY, options);
 	caps.setCapability("acceptInsecureCerts", true);*/
 		
-	driver.findElement(By.xpath(properties.getProperty("cmdb_userid_xpath"))).sendKeys(properties.getProperty(username)); //birajds1 jains9
-	driver.findElement(By.xpath(properties.getProperty("cmdb_pwd_xpath"))).sendKeys(properties.getProperty(password)); //testing123 Welcome@123
+	driver.findElement(By.xpath(properties.getProperty("cmdb_userid_xpath"))).sendKeys(properties.getProperty(username));
+	driver.findElement(By.xpath(properties.getProperty("cmdb_pwd_xpath"))).sendKeys(properties.getProperty(password));
 	driver.findElement(By.xpath(properties.getProperty("cmdb_loginBtn_xpath"))).click();
 	
 }
